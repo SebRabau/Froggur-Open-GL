@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\strab\Desktop\Froggur\Froggur-Open-GL\CI224-opengl-master\external\assimp-3.0.1270\contrib\zlib\adler32.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\strab\Desktop\Froggur\Froggur-Open-GL\CI224-opengl-master\external\assimp-3.0.1270\contrib\zlib\compress.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\strab\Desktop\Froggur\Froggur-Open-GL\CI224-opengl-master\external\assimp-3.0.1270\contrib\zlib\crc32.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\strab\Desktop\Froggur\Froggur-Open-GL\CI224-opengl-master\external\assimp-3.0.1270\contrib\zlib\deflate.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\strab\Desktop\Froggur\Froggur-Open-GL\CI224-opengl-master\external\assimp-3.0.1270\contrib\zlib\inffast.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\strab\Desktop\Froggur\Froggur-Open-GL\CI224-opengl-master\external\assimp-3.0.1270\contrib\zlib\inflate.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\strab\Desktop\Froggur\Froggur-Open-GL\CI224-opengl-master\external\assimp-3.0.1270\contrib\zlib\inftrees.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\strab\Desktop\Froggur\Froggur-Open-GL\CI224-opengl-master\external\assimp-3.0.1270\contrib\zlib\trees.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\strab\Desktop\Froggur\Froggur-Open-GL\CI224-opengl-master\external\assimp-3.0.1270\contrib\zlib\zutil.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\strab\Desktop\Froggur\Froggur-Open-GL\CI224-opengl-master\external\assimp-3.0.1270\contrib\zlib\zconf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\strab\Desktop\Froggur\Froggur-Open-GL\CI224-opengl-master\external\assimp-3.0.1270\contrib\zlib\zlib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\strab\Desktop\Froggur\Froggur-Open-GL\CI224-opengl-master\external\assimp-3.0.1270\contrib\zlib\crc32.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\strab\Desktop\Froggur\Froggur-Open-GL\CI224-opengl-master\external\assimp-3.0.1270\contrib\zlib\deflate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\strab\Desktop\Froggur\Froggur-Open-GL\CI224-opengl-master\external\assimp-3.0.1270\contrib\zlib\inffast.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\strab\Desktop\Froggur\Froggur-Open-GL\CI224-opengl-master\external\assimp-3.0.1270\contrib\zlib\inffixed.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\strab\Desktop\Froggur\Froggur-Open-GL\CI224-opengl-master\external\assimp-3.0.1270\contrib\zlib\inflate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\strab\Desktop\Froggur\Froggur-Open-GL\CI224-opengl-master\external\assimp-3.0.1270\contrib\zlib\inftrees.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\strab\Desktop\Froggur\Froggur-Open-GL\CI224-opengl-master\external\assimp-3.0.1270\contrib\zlib\trees.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\strab\Desktop\Froggur\Froggur-Open-GL\CI224-opengl-master\external\assimp-3.0.1270\contrib\zlib\zutil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\strab\Desktop\Froggur\Froggur-Open-GL\CI224-opengl-master\external\assimp-3.0.1270\contrib\zlib\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{09C97AF9-EC6A-3211-BF46-97604898CEA3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{5A643C5D-B23B-3511-8B6A-7FA18E705A15}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

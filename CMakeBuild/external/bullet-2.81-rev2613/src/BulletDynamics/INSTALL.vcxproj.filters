@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\strab\Desktop\Froggur\Froggur-Open-GL\CMakeBuild\CMakeFiles\e697dffc2deaa27c359a5b51f47ca7be\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{193E1F61-12CA-3C32-A3A0-C57E131F7BEE}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
