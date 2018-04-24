@@ -1,9 +1,0 @@
-# CMake generation dependency list for this directory.
-C:/Users/strab/Desktop/Froggur/Froggur-Open-GL/CI224-opengl-master/external/assimp-3.0.1270/contrib/zlib/CMakeLists.txt
-C:/Program Files/CMake/share/cmake-3.11/Modules/CheckIncludeFile.c.in
-C:/Program Files/CMake/share/cmake-3.11/Modules/CheckIncludeFile.c.in
-C:/Program Files/CMake/share/cmake-3.11/Modules/CheckIncludeFile.c.in
-C:/Program Files/CMake/share/cmake-3.11/Modules/CheckTypeSize.c.in
-C:/Users/strab/Desktop/Froggur/Froggur-Open-GL/CMakeBuild/CMakeFiles/CheckTypeSize/OFF64_T.c
-C:/Program Files/CMake/share/cmake-3.11/Modules/CheckFunctionExists.c
-C:/Program Files/CMake/share/cmake-3.11/Modules/CheckIncludeFile.c.in
