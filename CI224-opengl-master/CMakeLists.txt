@@ -62,6 +62,14 @@ set_source_files_properties(${SRC_FILES} PROPERTIES VS_TOOL_OVERRIDE "None")
 # Mycode
 add_executable(playground 
 	playground/playground.cpp
+	playground/gameObject.cpp
+	playground/gameObject.hpp
+	playground/model.cpp
+	playground/model.hpp
+	playground/view.cpp
+	playground/view.hpp
+	playground/controller.cpp
+	playground/controller.hpp
 	common/shader.cpp
 	common/shader.hpp
 	common/texture.cpp
