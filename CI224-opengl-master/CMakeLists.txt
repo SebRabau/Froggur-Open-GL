@@ -74,6 +74,8 @@ add_executable(playground
 	common/shader.hpp
 	common/texture.cpp
 	common/texture.hpp
+	common/objloader.cpp
+        common/objloader.hpp          
 	${SRC_FILES}
 
 		
