@@ -1,6 +1,20 @@
 #ifndef OBJLOADER_H
 #define OBJLOADER_H
 
+// Include standard headers
+#include <stdio.h>
+#include <stdlib.h>
+
+// Include GLEW
+#include <GL/glew.h>
+
+// Include GLFW
+#include <glfw3.h>
+
+// Include GLM
+#include <glm/glm.hpp>
+using namespace glm;
+
 bool loadOBJ(
 	const char * path, 
 	std::vector<glm::vec3> & out_vertices, 
