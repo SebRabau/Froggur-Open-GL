@@ -9,19 +9,22 @@
 #include <glfw3.h>
 GLFWwindow* window;
 
-#include "common/shader.hpp"
-
 // Include GLM
 #include <glm/glm.hpp>
 using namespace glm;
 
-#include <iostream>
-
 #include <vector>
 #include "common/objloader.hpp"
+#include <iostream>
+#include "common/shader.hpp"
 
 int main( void )
 {
+	//Initialise MVC
+	Model* gameModel = new Model();
+	View* gameView = new View(1024, 768, gameModel);
+	Controller* gameController = new Controller();
+	
 	// Initialise GLFW
 	if( !glfwInit() )
 	{
@@ -36,15 +39,7 @@ int main( void )
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	// Open a window and create its OpenGL context
-	window = glfwCreateWindow( 1024, 768, "Froggur", NULL, NULL);
-	if( window == NULL ){
-		fprintf( stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n" );
-		getchar();
-		glfwTerminate();
-		return -1;
-	}
-	glfwMakeContextCurrent(window);
+	gameView->initialise();
 
 	// Initialize GLEW
 	if (glewInit() != GLEW_OK) {
@@ -77,14 +72,14 @@ int main( void )
 	//glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
 
-	std::cout << vertices.size() << std::endl;
+	std::cout << verticies.size() << std::endl;
 
 	GLuint programID = LoadShaders("SimpleVertexShader.hlsl", "SimpleFragmentShader.hlsl");
 
 	do{
-		glUseProgram(programID);
+		glUseProgam(programID);
 		// Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
-		glClear( GL_COLOR_BUFFER_BIT );		
+		glClear( GL_COLOR_BUFFER_BIT );
 
 		// 1rst attribute buffer : vertices
 		glEnableVertexAttribArray(0);
@@ -103,6 +98,7 @@ int main( void )
 
 		glDisableVertexAttribArray(0);
 
+		
 		// Swap buffers
 		glfwSwapBuffers(window);
 		glfwPollEvents();
