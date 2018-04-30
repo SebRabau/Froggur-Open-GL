@@ -9,9 +9,13 @@
 #include <glfw3.h>
 GLFWwindow* window;
 
+#include "common/shader.hpp"
+
 // Include GLM
 #include <glm/glm.hpp>
 using namespace glm;
+
+#include <iostream>
 
 #include <vector>
 #include "common/objloader.hpp"
@@ -73,9 +77,14 @@ int main( void )
 	//glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
 
+	std::cout << vertices.size() << std::endl;
+
+	GLuint programID = LoadShaders("SimpleVertexShader.hlsl", "SimpleFragmentShader.hlsl");
+
 	do{
+		glUseProgram(programID);
 		// Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
-		glClear( GL_COLOR_BUFFER_BIT );
+		glClear( GL_COLOR_BUFFER_BIT );		
 
 		// 1rst attribute buffer : vertices
 		glEnableVertexAttribArray(0);
@@ -94,7 +103,6 @@ int main( void )
 
 		glDisableVertexAttribArray(0);
 
-		
 		// Swap buffers
 		glfwSwapBuffers(window);
 		glfwPollEvents();
@@ -105,7 +113,7 @@ int main( void )
 
 	// Cleanup VBO and shader
 	glDeleteBuffers(1, &vertexbuffer);
-	//glDeleteProgram(programID);
+	glDeleteProgram(programID);
 	glDeleteVertexArrays(1, &VertexArrayID);
 
 	// Close OpenGL window and terminate GLFW
