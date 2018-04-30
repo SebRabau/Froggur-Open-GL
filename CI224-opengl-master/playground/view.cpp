@@ -1,5 +1,6 @@
 #include "view.hpp"
-
+int width;
+int height;
 View::View(int widtht, int heightt, Model* modelt) {
 	width = widtht;
 	height = heightt;
@@ -9,7 +10,7 @@ View::~View() {
 
 }
 
-initialise() {
+int initialise() {
 	// Open a window and create its OpenGL context
 	window = glfwCreateWindow(width, height, "Froggur", NULL, NULL);
 	if (window == NULL) {
@@ -22,10 +23,10 @@ initialise() {
 	return 0;
 }
 
-getWidth() {
+int getWidth() {
 	return width;
 }
 
-getHeight() {
+int getHeight() {
 	return height;
 }

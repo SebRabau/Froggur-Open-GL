@@ -7,7 +7,6 @@
 
 // Include GLFW
 #include <glfw3.h>
-GLFWwindow* window;
 
 // Include GLM
 #include <glm/glm.hpp>

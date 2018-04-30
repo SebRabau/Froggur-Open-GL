@@ -1,3 +1,23 @@
+#ifndef MODEL_H
+#define MODEL_H
+
+// Include standard headers
+#include <stdio.h>
+#include <stdlib.h>
+
+// Include GLEW
+#include <GL/glew.h>
+
+// Include GLFW
+#include <glfw3.h>
+
+// Include GLM
+#include <glm/glm.hpp>
+using namespace glm;
+
+#include <vector>
+#include "gameObject.hpp"
+
 class Model {
 
 public:
@@ -25,3 +45,4 @@ public:
 	void setPause(bool pauset);
 	bool getPause();
 };
+#endif

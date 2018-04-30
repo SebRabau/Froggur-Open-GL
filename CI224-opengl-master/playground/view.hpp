@@ -1,3 +1,6 @@
+#ifndef VIEW_H
+#define VIEW_H
+
 // Include standard headers
 #include <stdio.h>
 #include <stdlib.h>
@@ -41,6 +44,7 @@ public:
 	int initialise();
 	int getWidth();
 	int getHeight();
-	void update(glm::mat4 projectionMatrix, glm::mat4 viewMatrix, char* text);
-	glm::mat4 getMVPMatrix(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, glm::mat4 ModelMatrix);
+	//void update(glm::mat4 projectionMatrix, glm::mat4 viewMatrix, char* text);
+	//glm::mat4 getMVPMatrix(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, glm::mat4 ModelMatrix);
 };
+#endif

@@ -1,3 +1,6 @@
+#ifndef CONTROLLER_H
+#define CONTROLLER_H
+
 // Include standard headers
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,11 +10,13 @@
 
 // Include GLFW
 #include <glfw3.h>
-GLFWwindow* window;
 
 // Include GLM
 #include <glm/glm.hpp>
 using namespace glm;
+
+#include "model.hpp"
+#include "view.hpp"
 
 class Controller {
 
@@ -31,3 +36,4 @@ public:
 	void loop();
 	double getDeltaTime();
 };
+#endif

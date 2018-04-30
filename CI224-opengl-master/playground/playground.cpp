@@ -18,13 +18,20 @@ using namespace glm;
 #include <iostream>
 #include "common/shader.hpp"
 
+#include "model.hpp"
+#include "view.hpp"
+#include "controller.hpp"
+
 int main( void )
 {
-	//Initialise MVC
-	Model* gameModel = new Model();
-	View* gameView = new View(1024, 768, gameModel);
-	Controller* gameController = new Controller();
+	int gameWidth = 1024;
+	int gameHeight = 768;
 	
+	//Initialise MVC
+	Model* gameModel = new Model(gameWidth, gameHeight);
+	View* gameView = new View(gameWidth, gameHeight, gameModel);
+	Controller* gameController = new Controller(gameModel, gameView);
+
 	// Initialise GLFW
 	if( !glfwInit() )
 	{
@@ -72,12 +79,12 @@ int main( void )
 	//glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
 
-	std::cout << verticies.size() << std::endl;
+	//std::cout << verticies.size() << std::endl;
 
 	GLuint programID = LoadShaders("SimpleVertexShader.hlsl", "SimpleFragmentShader.hlsl");
 
 	do{
-		glUseProgam(programID);
+		glUseProgram(programID);
 		// Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
 		glClear( GL_COLOR_BUFFER_BIT );
 
