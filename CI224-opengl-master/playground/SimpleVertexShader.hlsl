@@ -13,6 +13,8 @@ void main() {
 	// Output position of the vertex
 	gl_Position.xyz = vertexPosition_modelspace;
 
+	gl_Position.w = 1.0;
+
 	// UV of the vertex. 
 	UV = vertexUV;
 }
