@@ -15,6 +15,9 @@
 #include <glm/glm.hpp>
 using namespace glm;
 
+#include <vector>
+#include "common/objloader.hpp"
+
 class GameObject {
 
 private:
