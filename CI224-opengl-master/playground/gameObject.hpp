@@ -1,3 +1,6 @@
+#ifndef GAMEOBJECT_H
+#define GAMEOBJECT_H
+
 // Include standard headers
 #include <stdio.h>
 #include <stdlib.h>
@@ -50,3 +53,4 @@ public:
 
 	bool hasCollided(GameObject* collided);
 };
+#endif

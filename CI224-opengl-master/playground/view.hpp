@@ -10,19 +10,22 @@
 
 // Include GLFW
 #include <glfw3.h>
-GLFWwindow* window;
 
 // Include GLM
 #include <glm/glm.hpp>
 using namespace glm;
-#include "model.hpp";
+
+#include <vector>
+#include <iostream>
+#include "gameObject.hpp"
+#include "view.hpp"
+#include "common/objloader.hpp"
+#include "common/shader.hpp"
+
 
 class View {
 
 private:
-	Model* model;
-	GLFWwindow* window;
-
 	GLuint programID;
 	GLuint MatrixID;
 	GLuint LightID;
@@ -32,15 +35,17 @@ private:
 	GLuint VertexArrayID;
 
 	//screen size
-	int width;
-	int height;
+	int widthV;
+	int heightV;
+	bool once;
 	glm::vec3 lightPosition;
 	glm::vec3 cameraPosition;
 
 public:
-	View(int widtht, int heightt, Model* modelt);
+	View(int widtht, int heightt);
 	~View();
 	GLFWwindow* getWindow();
+	void draw(GLuint *buffer, int size);
 	int initialise();
 	int getWidth();
 	int getHeight();

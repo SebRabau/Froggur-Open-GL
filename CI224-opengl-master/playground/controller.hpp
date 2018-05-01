@@ -22,8 +22,8 @@ class Controller {
 
 private:
 
-	Model* model;   // Model of game
-	View*  view;    // View of game
+	Model* modelC;   // Model of game
+	View*  viewC;    // View of game
 	double deltaTime;
 	double currentFrame;
 	double lastFrame;
@@ -33,6 +33,7 @@ public:
 	Controller(Model* model, View *view);
 	~Controller();
 
+	void execute();
 	void loop();
 	double getDeltaTime();
 };

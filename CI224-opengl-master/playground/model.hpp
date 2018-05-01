@@ -16,22 +16,43 @@
 using namespace glm;
 
 #include <vector>
+#include <iostream>
 #include "gameObject.hpp"
+#include "view.hpp"
+#include "common/objloader.hpp"
+#include "common/shader.hpp"
+
 
 class Model {
 
-public:
+private:
 	GameObject* board;
 	GameObject* player;
 	std::vector<GameObject*> collectables;
+	GLFWwindow* window;
+	View* view;
+
+	GLuint programID;
+	GLuint MatrixID;
+	GLuint LightID;
+	GLuint CameraID;
+	GLuint ViewMatrixID;
+	GLuint ModelMatrixID;
+	GLuint VertexArrayID;
 
 	int collectables_size;
 	int collected;
 	bool isPause;
 
+	//Screen size
+	int heightM;
+	int widthM;
+
 public:
-	Model(int width, int height);
+	Model(int width, int height, View* viewt);
 	~Model();
+	int initialise();
+	void play();
 	void createGameObjects();
 	std::vector<GameObject*>  getCollectables();
 	GameObject* getBoard();
@@ -41,6 +62,8 @@ public:
 	int getCollectablesSize();
 	bool hasPlayerCollidedwithObstacles();
 	void deleteFromCollectables(GameObject* go);
+
+	GLFWwindow* getGameWindow();
 
 	void setPause(bool pauset);
 	bool getPause();
