@@ -3,10 +3,10 @@
 // Input vertex data
 
 layout(location = 0) in vec3 vertexPosition_modelspace;
-layout(location = 1) in vec2 vertexUV;
+//layout(location = 1) in vec2 vertexUV;
 
 // Output data ; will be interpolated for each fragment.
-out vec2 UV;
+//out vec2 UV;
 
 void main() {
 
@@ -16,5 +16,5 @@ void main() {
 	gl_Position.w = 1.0;
 
 	// UV of the vertex. 
-	UV = vertexUV;
+	//UV = vertexUV;
 }

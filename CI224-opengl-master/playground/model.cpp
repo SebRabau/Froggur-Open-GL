@@ -52,6 +52,11 @@ int Model::initialise() {
 	// Dark blue background
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
+	//Setup Vertex Array
+	GLuint VertexArrayID;
+	glGenVertexArrays(1, &VertexArrayID);
+	glBindVertexArray(VertexArrayID);
+
 	return 0;
 }
 
@@ -72,7 +77,7 @@ void Model::play() {
 
 	programID = LoadShaders("SimpleVertexShader.hlsl", "SimpleFragmentShader.hlsl");
 	do {
-		view->draw(&vertexbuffer, vertices.size());
+		view->draw(&vertexbuffer, vertices.size(), programID);
 
 		// Swap buffers
 		glfwSwapBuffers(window);
