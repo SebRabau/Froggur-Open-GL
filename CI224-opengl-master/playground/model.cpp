@@ -52,22 +52,6 @@ int Model::initialise() {
 	// Dark blue background
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
-	// Read our .obj file
-	std::vector<glm::vec3> vertices;
-	std::vector<glm::vec2> uvs; // Won't be used at the moment.
-	std::vector<glm::vec3> normals; // Won't be used at the moment.
-	bool res = loadOBJ("test.obj", vertices, uvs, normals);
-
-	
-	glGenBuffers(1, &vertexbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
-
-	std::cout << vertices.size() << std::endl;
-
-	programID = LoadShaders("SimpleVertexShader.hlsl", "SimpleFragmentShader.hlsl");
-
 	return 0;
 }
 
@@ -86,7 +70,7 @@ void Model::play() {
 
 	std::cout << vertices.size() << std::endl;
 
-	GLuint programID = LoadShaders("SimpleVertexShader.hlsl", "SimpleFragmentShader.hlsl");
+	programID = LoadShaders("SimpleVertexShader.hlsl", "SimpleFragmentShader.hlsl");
 	do {
 		view->draw(&vertexbuffer, vertices.size());
 
