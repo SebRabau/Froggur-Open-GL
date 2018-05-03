@@ -12,8 +12,8 @@ View::~View() {
 
 }
 
-void View::draw(GLuint *buffer, int size) {
-	glUseProgram(programID);
+void View::draw(GLuint *buffer, int size, GLuint program) {
+	glUseProgram(program);
 	// Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
 	glClear(GL_COLOR_BUFFER_BIT);
 

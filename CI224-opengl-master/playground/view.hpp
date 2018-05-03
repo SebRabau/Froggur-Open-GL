@@ -26,7 +26,6 @@ using namespace glm;
 class View {
 
 private:
-	GLuint programID;
 	GLuint MatrixID;
 	GLuint LightID;
 	GLuint CameraID;
@@ -45,7 +44,7 @@ public:
 	View(int widtht, int heightt);
 	~View();
 	GLFWwindow* getWindow();
-	void draw(GLuint *buffer, int size);
+	void draw(GLuint *buffer, int size, GLuint program);
 	int initialise();
 	int getWidth();
 	int getHeight();
