@@ -21,6 +21,7 @@ using namespace glm;
 #include "view.hpp"
 #include "common/objloader.hpp"
 #include "common/shader.hpp"
+#include "Camera.h"
 
 
 class Model {

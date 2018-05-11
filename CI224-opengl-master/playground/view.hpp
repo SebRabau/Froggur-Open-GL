@@ -21,6 +21,10 @@ using namespace glm;
 #include "view.hpp"
 #include "common/objloader.hpp"
 #include "common/shader.hpp"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include "Camera.h"
 
 
 class View {
@@ -44,7 +48,7 @@ public:
 	View(int widtht, int heightt);
 	~View();
 	GLFWwindow* getWindow();
-	void draw(GLuint *buffer, int size, GLuint program);
+	void draw(GLuint *buffer, int size, GLuint program, GLuint light, Camera camera);
 	int initialise();
 	int getWidth();
 	int getHeight();
