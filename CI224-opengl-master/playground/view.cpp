@@ -17,6 +17,7 @@ void View::draw(GLuint *buffer, int size, GLuint program) {
 	// Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	
 	// 1rst attribute buffer : vertices
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, *buffer);

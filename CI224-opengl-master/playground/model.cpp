@@ -61,23 +61,40 @@ int Model::initialise() {
 }
 
 void Model::play() {
-	// Read our .obj file
-	std::vector<glm::vec3> vertices;
-	std::vector<glm::vec2> uvs; // Won't be used at the moment.
-	std::vector<glm::vec3> normals; // Won't be used at the moment.
-	bool res = loadOBJ("test.obj", vertices, uvs, normals);
+	// Read our .obj files
 
+	//First object
+	std::vector<unsigned short> indices;
+	std::vector<glm::vec3> indexed_vertices;
+	std::vector<glm::vec2> indexed_uvs;
+	std::vector<glm::vec3> indexed_normals;
+	bool res = loadAssImp("test.obj", indices, indexed_vertices, indexed_uvs, indexed_normals);
+	
 	GLuint vertexbuffer;
 	glGenBuffers(1, &vertexbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, indexed_vertices.size() * sizeof(glm::vec3), &indexed_vertices[0], GL_STATIC_DRAW);
 
-	std::cout << vertices.size() << std::endl;
+	//std::cout << vertices.size() << std::endl;
+
+	//Second object
+	std::vector<unsigned short> indices1;
+	std::vector<glm::vec3> vertices1;
+	std::vector<glm::vec2> uvs1;
+	std::vector<glm::vec3> normals1;
+	//std::vector<unsigned int> list_vertices1;
+	//bool res1 = loadAssImpMeshes("sphere.obj", indices1, vertices1, uvs1, normals1, list_vertices1);
+	bool res1 = loadAssImp("test1.obj", indices1, vertices1, uvs1, normals1);
+
+	GLuint vertexbuffer1;
+	glGenBuffers(1, &vertexbuffer1);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer1);
+	glBufferData(GL_ARRAY_BUFFER, vertices1.size() * sizeof(glm::vec3), &vertices1[0], GL_STATIC_DRAW);
 
 	programID = LoadShaders("SimpleVertexShader.hlsl", "SimpleFragmentShader.hlsl");
 	do {
-		view->draw(&vertexbuffer, vertices.size(), programID);
+		view->draw(&vertexbuffer, indexed_vertices.size(), programID);
+		view->draw(&vertexbuffer1, vertices1.size(), programID);
 
 		// Swap buffers
 		glfwSwapBuffers(window);
