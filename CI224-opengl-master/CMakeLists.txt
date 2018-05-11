@@ -75,7 +75,10 @@ add_executable(playground
 	common/texture.cpp
 	common/texture.hpp
 	common/objloader.cpp
-        common/objloader.hpp          
+        common/objloader.hpp
+	common/controls.hpp
+	common/controls.cpp
+	playground/Camera.h          
 	${SRC_FILES}
 
 		
@@ -89,14 +92,6 @@ create_target_launcher(playground WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}
 target_link_libraries(playground
 	${ALL_LIBS}
 )
-
-set_target_properties(playground PROPERTIES COMPILE_DEFINITIONS "USE_ASSIMP")
-set_target_properties(playground PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/playground/")
-create_target_launcher(playground WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/playground/")
-target_link_libraries(playground
-                ${ALL_LIBS}
-                assimp
-)  
 
 SOURCE_GROUP(shaders REGULAR_EXPRESSION ".*/.*hlsl*" )
 SOURCE_GROUP(common REGULAR_EXPRESSION ".*/common/.*" )
