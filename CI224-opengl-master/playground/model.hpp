@@ -22,6 +22,9 @@ using namespace glm;
 #include "common/objloader.hpp"
 #include "common/shader.hpp"
 #include "Camera.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 
 class Model {

@@ -70,12 +70,13 @@ add_executable(playground
 	playground/view.hpp
 	playground/controller.cpp
 	playground/controller.hpp
+	playground/Camera.h
 	common/shader.cpp
 	common/shader.hpp
 	common/texture.cpp
 	common/texture.hpp
 	common/objloader.cpp
-        common/objloader.hpp          
+    common/objloader.hpp          
 	${SRC_FILES}
 
 		

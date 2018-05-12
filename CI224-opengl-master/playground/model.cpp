@@ -9,6 +9,11 @@ GLuint programID;
 GLuint programID2;
 GLuint light;
 
+/*void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+void processInput(GLFWwindow *window);*/
+
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
@@ -19,7 +24,6 @@ float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
-void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 
 Model::Model(int widtht, int heightt, View* viewt) {
 	heightM = heightt;
@@ -41,7 +45,6 @@ int Model::initialise() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwSetCursorPosCallback(window, mouse_callback);
 
 	// Open a window and create its OpenGL context
 	window = glfwCreateWindow(widthM, heightM, "Froggur", NULL, NULL);
@@ -52,6 +55,9 @@ int Model::initialise() {
 		return -1;
 	}
 	glfwMakeContextCurrent(window);
+	/*glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	glfwSetCursorPosCallback(window, mouse_callback);
+	glfwSetScrollCallback(window, scroll_callback);*/
 
 	// Initialize GLEW
 	if (glewInit() != GLEW_OK) {
@@ -63,6 +69,8 @@ int Model::initialise() {
 
 	// Ensure we can capture the escape key being pressed below
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+	//capture mouse
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	// Dark blue background
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
@@ -71,6 +79,10 @@ int Model::initialise() {
 	GLuint VertexArrayID;
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
+
+	//void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+
+	//glfwSetCursorPosCallback(window, mouse_callback);
 
 	return 0;
 }
@@ -83,36 +95,47 @@ void Model::play() {
 	std::vector<glm::vec3> vertices2;
 	std::vector<glm::vec2> uvs2; // Won't be used at the moment.
 	std::vector<glm::vec3> normals2; // Won't be used at the moment.
+	std::vector<glm::vec3> LightingV;
+	std::vector<glm::vec2> LightingUV; // Won't be used at the moment.
+	std::vector<glm::vec3> LightingN; // Won't be used at the moment.
 	
 	bool res = loadOBJ("test.obj", vertices, uvs, normals);
 	bool res2 = loadOBJ("test2.obj", vertices2, uvs2, normals2);
+	bool Lighting = loadOBJ("test2.obj", LightingV, LightingUV, LightingN);
 
 	GLuint vertexbuffer;
 	glGenBuffers(1, &vertexbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
 
 	GLuint vertexbuffer2;
 	glGenBuffers(1, &vertexbuffer2);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 	glBufferData(GL_ARRAY_BUFFER, vertices2.size() * sizeof(glm::vec3), &vertices2[0], GL_STATIC_DRAW);
+
+	GLuint LightingVB;
+	glGenBuffers(1, &LightingVB);
+	glBindBuffer(GL_ARRAY_BUFFER, LightingVB);
+	glBufferData(GL_ARRAY_BUFFER, LightingV.size() * sizeof(glm::vec3), &LightingV[0], GL_STATIC_DRAW);
 
 	std::cout << vertices.size() << std::endl; 
 	std::cout << vertices2.size() << std::endl;
+	std::cout << LightingV.size() << std::endl;
 
 	programID = LoadShaders("SimpleVertexShader.hlsl", "SimpleFragmentShader.hlsl");
 	programID2 = LoadShaders("GreenVertexShader.hlsl", "GreenFragmentShader.hlsl");
 	light = LoadShaders("LightingVertexShader.hlsl", "LightingFragmentShader.hlsl");
 
 	do {
+		//processInput(window);
+
 		// Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//view->draw(&vertexbuffer, vertices.size(), programID, light);
-		view->draw(&vertexbuffer2, vertices2.size(), programID2, light, camera);
+		view->draw(&vertexbuffer2, vertices2.size(), programID2, false, camera);
+		view->draw(&LightingVB, LightingV.size(), light, true, camera);
 
 		// Swap buffers
 		glfwSwapBuffers(window);
@@ -127,6 +150,8 @@ void Model::play() {
 	glDeleteProgram(programID);
 	glDeleteBuffers(1, &vertexbuffer2);
 	glDeleteProgram(programID2);
+	glDeleteBuffers(1, &LightingVB);
+	glDeleteProgram(light);
 	//glDeleteVertexArrays(1, &VertexArrayID);
 }
 
@@ -134,7 +159,7 @@ GLFWwindow* Model::getGameWindow() {
 	return window;
 }
 
-void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+/*void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
 	if (firstMouse)
 	{
@@ -150,4 +175,4 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	lastY = ypos;
 
 	camera.ProcessMouseMovement(xoffset, yoffset);
-}
+}*/

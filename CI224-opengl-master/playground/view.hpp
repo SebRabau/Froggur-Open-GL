@@ -48,7 +48,7 @@ public:
 	View(int widtht, int heightt);
 	~View();
 	GLFWwindow* getWindow();
-	void draw(GLuint *buffer, int size, GLuint program, GLuint light, Camera camera);
+	void draw(GLuint *buffer, int size, GLuint program, bool islight, Camera camera);
 	int initialise();
 	int getWidth();
 	int getHeight();
