@@ -2,6 +2,12 @@
 int widthV;
 int heightV;
 bool once = false;
+std::string lightProj = "projection";
+std::string lightView = "view";
+std::string lightMod = "model";
+vec3 lightPos(-4, 8, 0);
+//std::string lightPoss = "lightPos"; 
+std::string lightPoss = "LightPosition_worldspace";
 
 View::View(int widtht, int heightt) {
 	widthV = widtht;
@@ -12,25 +18,57 @@ View::~View() {
 
 }
 
-void View::draw(GLuint *buffer, int size, GLuint program) {
-	glUseProgram(program);
-	// Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
-	glClear(GL_COLOR_BUFFER_BIT);
+void View::draw(GLuint *vbuffer, int vsize, GLuint *cbuffer, GLuint *nbuffer, GLuint program, bool islight, Camera camera) {
+	glUseProgram(program);	
 
 	// 1rst attribute buffer : vertices
 	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, *buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, *vbuffer);
 	glVertexAttribPointer(
 		0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
 		3,                  // size
 		GL_FLOAT,           // type
 		GL_FALSE,           // normalized?
-		0,                  // stride
+		0,					// stride
 		(void*)0            // array buffer offset
 	);
 
+	// 2nd attribute buffer : colors
+	glEnableVertexAttribArray(1);
+	glBindBuffer(GL_ARRAY_BUFFER, *cbuffer);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+	// 3rd attribute buffer : normals
+	glEnableVertexAttribArray(2);
+	glBindBuffer(GL_ARRAY_BUFFER, *nbuffer);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	
+	// update the uniform color
+	float timeValue = glfwGetTime();
+	float greenValue = sin(timeValue) / 2.0f + 0.5f;
+	int vertexColorLocation = glGetUniformLocation(program, "ourColor");
+	glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);	
+
+	// view/projection transformations
+	mat4 projection = perspective(radians(camera.Zoom), (float)widthV / (float)heightV, 0.1f, 100.0f);
+	mat4 view = camera.GetViewMatrix();
+	mat4 model;
+	glUniformMatrix4fv(glGetUniformLocation(program, lightProj.c_str()), 1, GL_FALSE, &projection[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(program, lightView.c_str()), 1, GL_FALSE, &view[0][0]);
+
+	if (islight) {
+		model = mat4();
+		//model = translate(model, lightPos);
+		//model = scale(model, vec3(0.2f));
+
+		//Update lighting position	
+		glUniform3fv(glGetUniformLocation(program, lightPoss.c_str()), 1, &lightPos[0]);
+	}
+	glUniformMatrix4fv(glGetUniformLocation(program, lightMod.c_str()), 1, GL_FALSE, &model[0][0]);
+
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	// Draw the triangles
-	glDrawArrays(GL_TRIANGLES, 0, size * sizeof(glm::vec3));
+	glDrawArrays(GL_TRIANGLES, 0, vsize * sizeof(glm::vec3));
 
 	glDisableVertexAttribArray(0);	
 }
@@ -42,4 +80,3 @@ int View::getWidth() {
 int View::getHeight() {
 	return heightV;
 }
-

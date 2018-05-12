@@ -26,8 +26,6 @@ int main( void )
 	//Initialise MVC	
 	View* gameView = new View(gameWidth, gameHeight);
 	Model* gameModel = new Model(gameWidth, gameHeight, gameView);
-	//View* gameView = new View(gameWidth, gameHeight, gameModel);
-	//Model* gameModel = new Model(gameWidth, gameHeight);
 	Controller* gameController = new Controller(gameModel, gameView);
 
 	gameModel->initialise();	
