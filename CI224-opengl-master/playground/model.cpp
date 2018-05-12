@@ -96,20 +96,53 @@ void Model::play() {
 	bool res2 = loadOBJ("test2.obj", vertices2, uvs2, normals2);
 	bool Lighting = loadOBJ("test2.obj", LightingV, LightingUV, LightingN);
 
+	//Object 1
 	GLuint vertexbuffer;
 	glGenBuffers(1, &vertexbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
 
+	GLuint colorbuffer;
+	glGenBuffers(1, &colorbuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
+	glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec3), &uvs[0], GL_STATIC_DRAW);
+
+	GLuint normalbuffer;
+	glGenBuffers(1, &normalbuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
+	glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), &normals[0], GL_STATIC_DRAW);
+
+	//Object 2
 	GLuint vertexbuffer2;
 	glGenBuffers(1, &vertexbuffer2);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
 	glBufferData(GL_ARRAY_BUFFER, vertices2.size() * sizeof(glm::vec3), &vertices2[0], GL_STATIC_DRAW);
 
+	GLuint colorbuffer2;
+	glGenBuffers(1, &colorbuffer2);
+	glBindBuffer(GL_ARRAY_BUFFER, colorbuffer2);
+	glBufferData(GL_ARRAY_BUFFER, uvs2.size() * sizeof(glm::vec3), &uvs2[0], GL_STATIC_DRAW);
+
+	GLuint normalbuffer2;
+	glGenBuffers(1, &normalbuffer2);
+	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer2);
+	glBufferData(GL_ARRAY_BUFFER, normals2.size() * sizeof(glm::vec3), &normals2[0], GL_STATIC_DRAW);
+
+    //Light
 	GLuint LightingVB;
 	glGenBuffers(1, &LightingVB);
 	glBindBuffer(GL_ARRAY_BUFFER, LightingVB);
 	glBufferData(GL_ARRAY_BUFFER, LightingV.size() * sizeof(glm::vec3), &LightingV[0], GL_STATIC_DRAW);
+
+	GLuint LightingCB;
+	glGenBuffers(1, &LightingCB);
+	glBindBuffer(GL_ARRAY_BUFFER, LightingCB);
+	glBufferData(GL_ARRAY_BUFFER, LightingUV.size() * sizeof(glm::vec3), &LightingUV[0], GL_STATIC_DRAW);
+
+	GLuint LightingNB;
+	glGenBuffers(1, &LightingNB);
+	glBindBuffer(GL_ARRAY_BUFFER, LightingNB);
+	glBufferData(GL_ARRAY_BUFFER, LightingN.size() * sizeof(glm::vec3), &LightingN[0], GL_STATIC_DRAW);
 
 	std::cout << vertices.size() << std::endl; 
 	std::cout << vertices2.size() << std::endl;
@@ -126,8 +159,8 @@ void Model::play() {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		//view->draw(&vertexbuffer, vertices.size(), programID, light);
-		view->draw(&vertexbuffer2, vertices2.size(), programID, false, camera);
-		view->draw(&LightingVB, LightingV.size(), light, true, camera);
+		view->draw(&vertexbuffer2, vertices2.size(), &colorbuffer, &normalbuffer, light, true, camera);
+		//view->draw(&LightingVB, LightingV.size(), &LightingCB, &LightingNB, light, true, camera);
 
 		// Swap buffers
 		glfwSwapBuffers(window);
