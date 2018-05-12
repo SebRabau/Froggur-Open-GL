@@ -15,8 +15,8 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);*/
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 1024;
+const unsigned int SCR_HEIGHT = 768;
 
 // camera
 Camera camera(vec3(0.0f, 0.0f, 3.0f));
@@ -55,9 +55,8 @@ int Model::initialise() {
 		return -1;
 	}
 	glfwMakeContextCurrent(window);
-	/*glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-	glfwSetCursorPosCallback(window, mouse_callback);
-	glfwSetScrollCallback(window, scroll_callback);*/
+
+	glewExperimental = GL_TRUE;
 
 	// Initialize GLEW
 	if (glewInit() != GLEW_OK) {
@@ -69,8 +68,6 @@ int Model::initialise() {
 
 	// Ensure we can capture the escape key being pressed below
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-	//capture mouse
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	// Dark blue background
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
@@ -79,10 +76,6 @@ int Model::initialise() {
 	GLuint VertexArrayID;
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
-
-	//void mouse_callback(GLFWwindow* window, double xpos, double ypos);
-
-	//glfwSetCursorPosCallback(window, mouse_callback);
 
 	return 0;
 }
@@ -130,11 +123,10 @@ void Model::play() {
 		//processInput(window);
 
 		// Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
-		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT);
 
 		//view->draw(&vertexbuffer, vertices.size(), programID, light);
-		view->draw(&vertexbuffer2, vertices2.size(), programID2, false, camera);
+		view->draw(&vertexbuffer2, vertices2.size(), programID, false, camera);
 		view->draw(&LightingVB, LightingV.size(), light, true, camera);
 
 		// Swap buffers

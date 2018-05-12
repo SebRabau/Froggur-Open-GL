@@ -29,10 +29,10 @@ void View::draw(GLuint *buffer, int size, GLuint program, bool islight, Camera c
 		3,                  // size
 		GL_FLOAT,           // type
 		GL_FALSE,           // normalized?
-		0,                  // stride
+		6 * sizeof(float),  // stride
 		(void*)0            // array buffer offset
 	);
-
+	
 	// update the uniform color
 	float timeValue = glfwGetTime();
 	float greenValue = sin(timeValue) / 2.0f + 0.5f;
@@ -46,19 +46,19 @@ void View::draw(GLuint *buffer, int size, GLuint program, bool islight, Camera c
 	glUniformMatrix4fv(glGetUniformLocation(program, lightProj.c_str()), 1, GL_FALSE, &projection[0][0]);
 	glUniformMatrix4fv(glGetUniformLocation(program, lightView.c_str()), 1, GL_FALSE, &view[0][0]);
 
-	if (light) {
+	if (islight) {
 		model = mat4();
 		model = translate(model, lightPos);
 		model = scale(model, vec3(0.2f));
+
+		//Update lighting position	
+		glUniform3fv(glGetUniformLocation(program, lightPoss.c_str()), 1, &lightPos[0]);
 	}
 	glUniformMatrix4fv(glGetUniformLocation(program, lightMod.c_str()), 1, GL_FALSE, &model[0][0]);
 
 
 	// Draw the triangles
 	glDrawArrays(GL_TRIANGLES, 0, size * sizeof(glm::vec3));
-
-	//Update lighting position	
-	glUniform3fv(glGetUniformLocation(light, lightPoss.c_str()), 1, &lightPos[0]);
 
 	glDisableVertexAttribArray(0);	
 }
