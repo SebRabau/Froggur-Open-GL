@@ -17,7 +17,7 @@ View::~View() {
 
 }
 
-void View::draw(GLuint *vbuffer, int vsize, GLuint *cbuffer, GLuint *nbuffer, GLuint program, bool islight, Camera camera, int once) {
+void View::draw(GLuint *vbuffer, int vsize, GLuint *cbuffer, GLuint *nbuffer, GLuint program, bool islight, Camera camera) {
 	glUseProgram(program);	
 
 	// 1rst attribute buffer : vertices
@@ -60,8 +60,7 @@ void View::draw(GLuint *vbuffer, int vsize, GLuint *cbuffer, GLuint *nbuffer, GL
 	model = scale(model, vec3(0.2f)); 
 
 	
-		model = rotate(model, (float)0.5, vec3(500.0f, 0.0f, 0.0f));
-		std::cout << "rotating" << std::endl;
+	model = rotate(model, (float)0.5, vec3(-45.0f, 0.0f, 0.0f));
 	//model = rotate(model, (float)glfwGetTime(), vec3(0.0f, 1.0f, 1.0f));
 
 	//Update lighting position	

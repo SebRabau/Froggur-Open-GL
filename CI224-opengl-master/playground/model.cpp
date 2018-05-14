@@ -8,7 +8,6 @@ GLuint vertexbuffer;
 GLuint programID;
 GLuint programID2;
 GLuint light;
-int once = 0;
 
 /*void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -20,7 +19,7 @@ const unsigned int SCR_WIDTH = 1024;
 const unsigned int SCR_HEIGHT = 768;
 
 // camera
-Camera camera(vec3(0.0f, 0.0f, 3.5f));
+Camera camera(vec3(0.0f, 0.0f, 5.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -378,26 +377,25 @@ void Model::play() {
 		//view->draw(&vertexbuffer, vertices.size(), &colorbuffer, &normalbuffer, programID2, true, camera);
 		//view->draw(&vertexbuffer2, vertices2.size(), &colorbuffer2, &normalbuffer2, light, true, camera);
 		//view->draw(&LightingVB, LightingV.size(), &LightingCB, &LightingNB, light, true, camera);
-		view->draw(&floorVB, floorV.size(), &floorCB, &floorNB, light, true, camera, once);
-		view->draw(&leftWVB, leftWV.size(), &leftWCB, &leftWNB, light, true, camera, once);
-		view->draw(&rightWVB, rightWV.size(), &rightWCB, &rightWNB, light, true, camera, once);
-		view->draw(&movingVB, movingV.size(), &movingCB, &movingNB, light, true, camera, once);
-		view->draw(&playerVB, playerV.size(), &playerCB, &playerNB, light, true, camera, once);
+		view->draw(&floorVB, floorV.size(), &floorCB, &floorNB, light, true, camera);
+		view->draw(&leftWVB, leftWV.size(), &leftWCB, &leftWNB, light, true, camera);
+		view->draw(&rightWVB, rightWV.size(), &rightWCB, &rightWNB, light, true, camera);
+		view->draw(&movingVB, movingV.size(), &movingCB, &movingNB, light, true, camera);
+		view->draw(&playerVB, playerV.size(), &playerCB, &playerNB, light, true, camera);
 
 		//barriers
-		view->draw(&barrier1VB, b1V.size(), &barrier1CB, &barrier1NB, light, true, camera, once);
-		view->draw(&barrier2VB, b2V.size(), &barrier2CB, &barrier2NB, light, true, camera, once);
-		view->draw(&barrier3VB, b3V.size(), &barrier3CB, &barrier3NB, light, true, camera, once);
-		view->draw(&barrier4VB, b4V.size(), &barrier4CB, &barrier4NB, light, true, camera, once);
-		view->draw(&barrier5VB, b5V.size(), &barrier5CB, &barrier5NB, light, true, camera, once);
-		view->draw(&barrier6VB, b6V.size(), &barrier6CB, &barrier6NB, light, true, camera, once);
-		view->draw(&barrier7VB, b7V.size(), &barrier7CB, &barrier7NB, light, true, camera, once);
+		view->draw(&barrier1VB, b1V.size(), &barrier1CB, &barrier1NB, light, true, camera);
+		view->draw(&barrier2VB, b2V.size(), &barrier2CB, &barrier2NB, light, true, camera);
+		view->draw(&barrier3VB, b3V.size(), &barrier3CB, &barrier3NB, light, true, camera);
+		view->draw(&barrier4VB, b4V.size(), &barrier4CB, &barrier4NB, light, true, camera);
+		view->draw(&barrier5VB, b5V.size(), &barrier5CB, &barrier5NB, light, true, camera);
+		view->draw(&barrier6VB, b6V.size(), &barrier6CB, &barrier6NB, light, true, camera);
+		view->draw(&barrier7VB, b7V.size(), &barrier7CB, &barrier7NB, light, true, camera);
 
 		// Swap buffers
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 
-		once++;
 
 	} // Check if the ESC key was pressed or the window was closed
 	while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
