@@ -71,5 +71,7 @@ public:
 
 	void setPause(bool pauset);
 	bool getPause();
+
+	vec3 playerInput(vec3 playerTrans);
 };
 #endif

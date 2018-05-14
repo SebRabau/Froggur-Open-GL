@@ -152,15 +152,22 @@ void Model::play() {
 	programID2 = LoadShaders("GreenVertexShader.hlsl", "GreenFragmentShader.hlsl");
 	light = LoadShaders("LightingVertexShader.hlsl", "LightingFragmentShader.hlsl");
 
+	vec3 playerTrans;
+
 	do {
-		//processInput(window);
+		//Enable depth test
+		glEnable(GL_DEPTH_TEST);
+		//accept fragment if its closer to the camera than the former one
+		glDepthFunc(GL_LESS);
+
+		playerTrans = playerInput(playerTrans);
 
 		// Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//view->draw(&vertexbuffer, vertices.size(), &colorbuffer, &normalbuffer, programID2, true, camera);
 		//view->draw(&vertexbuffer2, vertices2.size(), &colorbuffer2, &normalbuffer2, light, true, camera);
-		view->draw(&LightingVB, LightingV.size(), &LightingCB, &LightingNB, light, true, camera);
+		view->draw(&LightingVB, LightingV.size(), &LightingCB, &LightingNB, light, true, camera, playerTrans);
 
 		// Swap buffers
 		glfwSwapBuffers(window);
@@ -182,6 +189,35 @@ void Model::play() {
 
 GLFWwindow* Model::getGameWindow() {
 	return window;
+}
+
+vec3 Model::playerInput(vec3 playerTrans) {
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+		std::cout << "Up Pressed" << std::endl;
+		std::cout << playerTrans.y << std::endl;
+		playerTrans = playerTrans + vec3(0.0f, 0.001f, 0.0f);
+		glfwGetKey(window, GLFW_KEY_UP);
+	}
+	else if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+		std::cout << "Down Pressed" << std::endl;
+		std::cout << playerTrans.y << std::endl;
+		playerTrans = playerTrans + vec3(0.0f, -0.001f, 0.0f);
+		glfwGetKey(window, GLFW_KEY_DOWN);
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+		std::cout << "Left Pressed" << std::endl;
+		std::cout << playerTrans.x << std::endl;
+		playerTrans = playerTrans + vec3(-0.001f, 0.0f, 0.0f);
+		glfwGetKey(window, GLFW_KEY_LEFT);
+	}
+	else if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+		std::cout << "Right Pressed" << std::endl;
+		std::cout << playerTrans.x << std::endl;
+		playerTrans = playerTrans + vec3(0.001f, 0.0f, 0.0f);
+		glfwGetKey(window, GLFW_KEY_RIGHT);
+	}
+	return playerTrans;
 }
 
 /*void mouse_callback(GLFWwindow* window, double xpos, double ypos)
