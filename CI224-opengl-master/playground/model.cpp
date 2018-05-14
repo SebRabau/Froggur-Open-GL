@@ -383,20 +383,20 @@ void Model::play() {
 		//view->draw(&vertexbuffer, vertices.size(), &colorbuffer, &normalbuffer, programID2, true, camera);
 		//view->draw(&vertexbuffer2, vertices2.size(), &colorbuffer2, &normalbuffer2, light, true, camera);
 		//view->draw(&LightingVB, LightingV.size(), &LightingCB, &LightingNB, light, true, camera);
-		view->draw(&floorVB, floorV.size(), &floorCB, &floorNB, light, false, camera, vec3(0.0, 0.0, 0.0));
-		view->draw(&leftWVB, leftWV.size(), &leftWCB, &leftWNB, light, false, camera, vec3(0.0, 0.0, 0.0));
-		view->draw(&rightWVB, rightWV.size(), &rightWCB, &rightWNB, light, false, camera, vec3(0.0, 0.0, 0.0));
-		view->draw(&movingVB, movingV.size(), &movingCB, &movingNB, light, false, camera, vec3(0.0, 0.0, 0.0));
-		view->draw(&playerVB, playerV.size(), &playerCB, &playerNB, light, true, camera, playerTrans);
+		view->draw(&floorVB, floorV.size(), &floorCB, &floorNB, floorShader, false, camera, vec3(0.0, 0.0, 0.0));
+		view->draw(&leftWVB, leftWV.size(), &leftWCB, &leftWNB, wallShader, false, camera, vec3(0.0, 0.0, 0.0));
+		view->draw(&rightWVB, rightWV.size(), &rightWCB, &rightWNB, wallShader, false, camera, vec3(0.0, 0.0, 0.0));
+		view->draw(&movingVB, movingV.size(), &movingCB, &movingNB, greenShader, false, camera, vec3(0.0, 0.0, 0.0));
+		view->draw(&playerVB, playerV.size(), &playerCB, &playerNB, playerShader, true, camera, playerTrans);
 
 		//barriers
-		view->draw(&barrier1VB, b1V.size(), &barrier1CB, &barrier1NB, light, false, camera, vec3(0.0, 0.0, 0.0));
-		view->draw(&barrier2VB, b2V.size(), &barrier2CB, &barrier2NB, light, false, camera, vec3(0.0, 0.0, 0.0));
-		view->draw(&barrier3VB, b3V.size(), &barrier3CB, &barrier3NB, light, false, camera, vec3(0.0, 0.0, 0.0));
-		view->draw(&barrier4VB, b4V.size(), &barrier4CB, &barrier4NB, light, false, camera, vec3(0.0, 0.0, 0.0));
-		view->draw(&barrier5VB, b5V.size(), &barrier5CB, &barrier5NB, light, false, camera, vec3(0.0, 0.0, 0.0));
-		view->draw(&barrier6VB, b6V.size(), &barrier6CB, &barrier6NB, light, false, camera, vec3(0.0, 0.0, 0.0));
-		view->draw(&barrier7VB, b7V.size(), &barrier7CB, &barrier7NB, light, false, camera, vec3(0.0, 0.0, 0.0));
+		view->draw(&barrier1VB, b1V.size(), &barrier1CB, &barrier1NB, floorShader, false, camera, vec3(0.0, 0.0, 0.0));
+		view->draw(&barrier2VB, b2V.size(), &barrier2CB, &barrier2NB, floorShader, false, camera, vec3(0.0, 0.0, 0.0));
+		view->draw(&barrier3VB, b3V.size(), &barrier3CB, &barrier3NB, floorShader, false, camera, vec3(0.0, 0.0, 0.0));
+		view->draw(&barrier4VB, b4V.size(), &barrier4CB, &barrier4NB, floorShader, false, camera, vec3(0.0, 0.0, 0.0));
+		view->draw(&barrier5VB, b5V.size(), &barrier5CB, &barrier5NB, floorShader, false, camera, vec3(0.0, 0.0, 0.0));
+		view->draw(&barrier6VB, b6V.size(), &barrier6CB, &barrier6NB, floorShader, false, camera, vec3(0.0, 0.0, 0.0));
+		view->draw(&barrier7VB, b7V.size(), &barrier7CB, &barrier7NB, floorShader, false, camera, vec3(0.0, 0.0, 0.0));
 
 		// Swap buffers
 		glfwSwapBuffers(window);
@@ -409,7 +409,7 @@ void Model::play() {
 
 	// Cleanup VBO and shader
 	glDeleteProgram(playerShader);
-	glDeleteProgram(greenshader);
+	glDeleteProgram(greenShader);
 	glDeleteProgram(wallShader);
 	glDeleteProgram(floorShader);
 
@@ -449,7 +449,7 @@ vec3 Model::playerInput(vec3 playerTrans) {
 	else if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
 		std::cout << "Down Pressed" << std::endl;
 		std::cout << playerTrans.y << std::endl;
-		playerTrans = playerTrans + vec3(0.0f, -0.1f, 0.0f);
+		playerTrans = playerTrans + vec3(0.0f, 0.01f, 0.0f);
 		glfwGetKey(window, GLFW_KEY_DOWN);
 
 	}
