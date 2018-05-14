@@ -71,6 +71,8 @@ add_executable(playground
 	playground/controller.cpp
 	playground/controller.hpp
 	playground/Camera.h
+	playground/boundingBox.hpp
+	playground/boundingBox.cpp
 	common/shader.cpp
 	common/shader.hpp
 	common/texture.cpp
