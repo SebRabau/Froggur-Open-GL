@@ -504,7 +504,6 @@ vec3 Model::playerInput(vec3 playerTrans, BoundingBox* _playerBB) {
 		//std::cout << playerTrans.x << std::endl;
 		playerTrans = playerTrans + vec3(-0.01f, 0.0f, 0.0f);
 		_playerBB->update(playerTrans);
-		std::cout << "PBB= " << _playerBB->btl.x << std::endl;
 		glfwGetKey(window, GLFW_KEY_LEFT);
 
 	}
@@ -522,16 +521,12 @@ vec3 Model::playerInput(vec3 playerTrans, BoundingBox* _playerBB) {
 
 void Model::handleCollision(BoundingBox* player, BoundingBox* object) {
 	if (player->btl.x <= object->getMax().x && player->btr.x >= object->getMax().x && player->btr.y <= object->getMax().y && player->btr.y >= object->getMin().y) { //hit left
-		std::cout << "THEY INTERSECT!L" << std::endl;
 		playerTrans += vec3(0.5, 0.0, 0.0);
 	} else if (player->btr.x >= object->getMin().x && player->btl.x <= object->getMin().x && player->btr.y <= object->getMax().y && player->btr.y >= object->getMin().y) { //hit right
-		std::cout << "THEY INTERSECT!R" << std::endl;
 		playerTrans += vec3(-0.5, 0.0, 0.0);
-	} else if (player->btl.y >= object->getMin().y && player->bbl.y <= object->getMin().y && player->btl.x >= object->getMin().x && player->btr.x <= object->getMax().x) { //hit top
-		std::cout << "THEY INTERSECT!" << std::endl;
+	} else if (player->btl.y >= object->getMin().y && player->bbl.y <= object->getMin().y && player->btl.x > object->getMin().x - 0.6 && player->btr.x < object->getMax().x + 0.6) { //hit top
 		playerTrans += vec3(0.0, -0.5, 0.0);
-	} else if (player->bbl.y <= object->getMax().y && player->btl.y >= object->getMax().y && player->btl.x >= object->getMin().x && player->btr.x <= object->getMax().x) { //hit bottom
-		std::cout << "THEY INTERSECT!" << std::endl;
+	} else if (player->bbl.y <= object->getMax().y && player->btl.y >= object->getMax().y && player->bbl.x > object->getMin().x - 0.6 && player->btr.x < object->getMax().x + 0.6) { //hit bottom
 		playerTrans += vec3(0.0, 0.5, 0.0);
 	}
 }
