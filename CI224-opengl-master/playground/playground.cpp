@@ -20,8 +20,8 @@ using namespace glm;
 
 int main( void )
 {
-	int gameWidth = 1024;
-	int gameHeight = 768;
+	int gameWidth =1920;
+	int gameHeight = 1080;
 	
 	//Initialise MVC	
 	View* gameView = new View(gameWidth, gameHeight);
