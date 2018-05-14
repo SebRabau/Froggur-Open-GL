@@ -465,36 +465,27 @@ void Model::play() {
 	//Left vector Movement
 	vec3 movingObjsL1;
 	vec3 movingObjsL2;
-	vec3 movingObjsL3;
 	vec3 movingObjsL4;
 	vec3 movingObjsL5;
-	vec3 movingObjsL6;
 	vec3 movingObjsL7;
 	vec3 movingObjsL8;
-	vec3 movingObjsL9;
 	
 	vec3 movingObjsLF1;
 	vec3 movingObjsLF2;
-	vec3 movingObjsLF3;
 	vec3 movingObjsLF4;
 	vec3 movingObjsLF5;
-	vec3 movingObjsLF6;
 
 
 	//Right Vector Movement
 	vec3 movingObjsR1;
 	vec3 movingObjsR2;
-	vec3 movingObjsR3;
 	vec3 movingObjsR4;
 	vec3 movingObjsR5;
-	vec3 movingObjsR6;
 	vec3 movingObjsR7;
 	vec3 movingObjsR8;
-	vec3 movingObjsR9;
 
 	vec3 movingObjsRF1;
 	vec3 movingObjsRF2;
-	vec3 movingObjsRF3;
 
 
 
@@ -509,32 +500,23 @@ void Model::play() {
 
 		c1BB->update(movingObjsL1);
 		c1BB->update(movingObjsL2);
-		c1BB->update(movingObjsL3);
 		c1BB->update(movingObjsL4);
 		c1BB->update(movingObjsL5);
-		c1BB->update(movingObjsL6);
 		c1BB->update(movingObjsL7);
 		c1BB->update(movingObjsL8);
-		c1BB->update(movingObjsL9);
 		c1BB->update(movingObjsLF1);
 		c1BB->update(movingObjsLF2);
-		c1BB->update(movingObjsLF3);
 		c1BB->update(movingObjsLF4);
 		c1BB->update(movingObjsLF5);
-		c1BB->update(movingObjsLF6);
 
 		c2BB->update(movingObjsR1);
 		c2BB->update(movingObjsR2);
-		c2BB->update(movingObjsR3);
 		c2BB->update(movingObjsR4);
 		c2BB->update(movingObjsR5);
-		c2BB->update(movingObjsR6);
 		c2BB->update(movingObjsR7);
 		c2BB->update(movingObjsR8);
-		c2BB->update(movingObjsR9);
 		c2BB->update(movingObjsRF1);
 		c2BB->update(movingObjsRF2);
-		c2BB->update(movingObjsRF3);
 
 		handleCollision(playerBB, leftWBB);
 		handleCollision(playerBB, rightWBB);
