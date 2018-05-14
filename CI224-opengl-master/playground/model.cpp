@@ -11,11 +11,6 @@ GLuint wallShader;
 GLuint floorShader;
 vec3 playerTrans;
 
-/*void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void mouse_callback(GLFWwindow* window, double xpos, double ypos);
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-void processInput(GLFWwindow *window);*/
-
 // settings
 const unsigned int SCR_WIDTH = 1920;
 const unsigned int SCR_HEIGHT = 1080;
@@ -124,7 +119,7 @@ void Model::play() {
 	std::vector<glm::vec3> moving1RV;
 	std::vector<glm::vec2> moving1RUV;
 	std::vector<glm::vec3> moving1RLN;
-  
+
 	//Barriers
 
 	//1
@@ -230,8 +225,7 @@ void Model::play() {
 	glGenBuffers(1, &leftWNB);
 	glBindBuffer(GL_ARRAY_BUFFER, leftWNB);
 	glBufferData(GL_ARRAY_BUFFER, leftWLN.size() * sizeof(glm::vec3), &leftWLN[0], GL_STATIC_DRAW);
-
-
+	
 	//RightWall
 	GLuint rightWVB;
 	glGenBuffers(1, &rightWVB);
@@ -361,8 +355,7 @@ void Model::play() {
 	glGenBuffers(1, &barrier3NB);
 	glBindBuffer(GL_ARRAY_BUFFER, barrier3NB);
 	glBufferData(GL_ARRAY_BUFFER, b3LN.size() * sizeof(glm::vec3), &b3LN[0], GL_STATIC_DRAW);
-
-
+	
 	//barrier4
 	GLuint barrier4VB;
 	glGenBuffers(1, &barrier4VB);
@@ -426,7 +419,7 @@ void Model::play() {
 	glGenBuffers(1, &barrier7NB);
 	glBindBuffer(GL_ARRAY_BUFFER, barrier7NB);
 	glBufferData(GL_ARRAY_BUFFER, b7LN.size() * sizeof(glm::vec3), &b7LN[0], GL_STATIC_DRAW);
-  
+	
 	//bounding boxes
 	BoundingBox* playerBB = new BoundingBox(playerV);
 
@@ -462,46 +455,39 @@ void Model::play() {
 
 	BoundingBox* c2BB = new BoundingBox(moving1V);
 	c2BB->initialise();
-
+	
 	//Programs
 	playerShader = LoadShaders("Shaders/PlayerVertexShader.hlsl", "Shaders/PlayerFragmentShader.hlsl");
 	greenShader = LoadShaders("Shaders/GreenVertexShader.hlsl", "Shaders/GreenFragmentShader.hlsl");
 	wallShader = LoadShaders("Shaders/WallVertexShader.hlsl", "Shaders/WallFragmentShader.hlsl");
-	floorShader = LoadShaders("Shaders/FloorVertexShader.hlsl", "Shaders/FloorFragmentShader.hlsl");
+	floorShader = LoadShaders("Shaders/FloorVertexShader.hlsl", "Shaders/FloorFragmentShader.hlsl");	
 
 	//Left vector Movement
 	vec3 movingObjsL1;
 	vec3 movingObjsL2;
-	vec3 movingObjsL3;
 	vec3 movingObjsL4;
 	vec3 movingObjsL5;
-	vec3 movingObjsL6;
 	vec3 movingObjsL7;
 	vec3 movingObjsL8;
-	vec3 movingObjsL9;
 	
 	vec3 movingObjsLF1;
 	vec3 movingObjsLF2;
-	vec3 movingObjsLF3;
 	vec3 movingObjsLF4;
 	vec3 movingObjsLF5;
-	vec3 movingObjsLF6;
 
 
 	//Right Vector Movement
 	vec3 movingObjsR1;
 	vec3 movingObjsR2;
-	vec3 movingObjsR3;
 	vec3 movingObjsR4;
 	vec3 movingObjsR5;
-	vec3 movingObjsR6;
 	vec3 movingObjsR7;
 	vec3 movingObjsR8;
-	vec3 movingObjsR9;
 
 	vec3 movingObjsRF1;
 	vec3 movingObjsRF2;
-	vec3 movingObjsRF3;
+
+
 
 	do {
 		playerBB->initialise();
@@ -514,32 +500,23 @@ void Model::play() {
 
 		c1BB->update(movingObjsL1);
 		c1BB->update(movingObjsL2);
-		c1BB->update(movingObjsL3);
 		c1BB->update(movingObjsL4);
 		c1BB->update(movingObjsL5);
-		c1BB->update(movingObjsL6);
 		c1BB->update(movingObjsL7);
 		c1BB->update(movingObjsL8);
-		c1BB->update(movingObjsL9);
 		c1BB->update(movingObjsLF1);
 		c1BB->update(movingObjsLF2);
-		c1BB->update(movingObjsLF3);
 		c1BB->update(movingObjsLF4);
 		c1BB->update(movingObjsLF5);
-		c1BB->update(movingObjsLF6);
 
 		c2BB->update(movingObjsR1);
 		c2BB->update(movingObjsR2);
-		c2BB->update(movingObjsR3);
 		c2BB->update(movingObjsR4);
 		c2BB->update(movingObjsR5);
-		c2BB->update(movingObjsR6);
 		c2BB->update(movingObjsR7);
 		c2BB->update(movingObjsR8);
-		c2BB->update(movingObjsR9);
 		c2BB->update(movingObjsRF1);
 		c2BB->update(movingObjsRF2);
-		c2BB->update(movingObjsRF3);
 
 		handleCollision(playerBB, leftWBB);
 		handleCollision(playerBB, rightWBB);
@@ -553,9 +530,9 @@ void Model::play() {
 		handleCollision(playerBB, c1BB);
 		handleCollision(playerBB, c2BB);
 
-
 		// Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
 		view->draw(&floorVB, floorV.size(), &floorCB, &floorNB, floorShader, false, false, camera, vec3(0.0, 0.0, 0.0));
 		view->draw(&leftWVB, leftWV.size(), &leftWCB, &leftWNB, wallShader, false, false, camera, vec3(0.0, 0.0, 0.0));
@@ -564,34 +541,29 @@ void Model::play() {
 		///moving objs speed
 		movingObjsL1 = movingObjsL1 + vec3(-0.002, 0.0, 0.0);
 		movingObjsL2 = movingObjsL2 + vec3(-0.002, 0.0, 0.0);
-		movingObjsL3 = movingObjsL3 + vec3(-0.002, 0.0, 0.0);
+
 		movingObjsL4 = movingObjsL4 + vec3(-0.002, 0.0, 0.0);
 		movingObjsL5 = movingObjsL5 + vec3(-0.002, 0.0, 0.0);
-		movingObjsL6 = movingObjsL6 + vec3(-0.002, 0.0, 0.0);
+
 		movingObjsL7 = movingObjsL7 + vec3(-0.002, 0.0, 0.0);
 		movingObjsL8 = movingObjsL8 + vec3(-0.002, 0.0, 0.0);
-		movingObjsL9 = movingObjsL9 + vec3(-0.002, 0.0, 0.0);
+
 
 		movingObjsLF1 = movingObjsLF1 + vec3(-0.004, 0.0, 0.0);
 		movingObjsLF2 = movingObjsLF2 + vec3(-0.004, 0.0, 0.0);
-		movingObjsLF3 = movingObjsLF3 + vec3(-0.004, 0.0, 0.0);
 		movingObjsLF4 = movingObjsLF4 + vec3(-0.004, 0.0, 0.0);
 		movingObjsLF5 = movingObjsLF5 + vec3(-0.004, 0.0, 0.0);
-		movingObjsLF6 = movingObjsLF6 + vec3(-0.004, 0.0, 0.0);
-		
+				
 		movingObjsR1 = movingObjsR1 + vec3(0.002, 0.0, 0.0);
 		movingObjsR2 = movingObjsR2 + vec3(0.002, 0.0, 0.0);
-		movingObjsR3 = movingObjsR3 + vec3(0.002, 0.0, 0.0);
-		movingObjsR1 = movingObjsR4 + vec3(0.002, 0.0, 0.0);
-		movingObjsR2 = movingObjsR5 + vec3(0.002, 0.0, 0.0);
-		movingObjsR3 = movingObjsR6 + vec3(0.002, 0.0, 0.0);
-		movingObjsR3 = movingObjsR7 + vec3(0.002, 0.0, 0.0);
-		movingObjsR3 = movingObjsR8 + vec3(0.002, 0.0, 0.0);
-		movingObjsR3 = movingObjsR9 + vec3(0.002, 0.0, 0.0);
+		movingObjsR4 = movingObjsR4 + vec3(0.002, 0.0, 0.0);
+		movingObjsR5 = movingObjsR5 + vec3(0.002, 0.0, 0.0);
+		movingObjsR7 = movingObjsR7 + vec3(0.002, 0.0, 0.0);
+		movingObjsR8 = movingObjsR8 + vec3(0.002, 0.0, 0.0);
 
 		movingObjsRF1 = movingObjsRF1 + vec3(0.004, 0.0, 0.0);
-		movingObjsRF1 = movingObjsRF2 + vec3(0.004, 0.0, 0.0);
-		movingObjsRF1 = movingObjsRF3 + vec3(0.004, 0.0, 0.0);
+		movingObjsRF2 = movingObjsRF2 + vec3(0.004, 0.0, 0.0);
+
 
 		
 		//Row 1 Right To left - Car 1
@@ -604,25 +576,18 @@ void Model::play() {
 		  		  if (movingObjsL2[0] < -13) {
 				 movingObjsL2[0] = 4.0f;
 		  }
-		//Car3
-		  view->draw(&movingVB, movingV.size(), &movingCB, &movingNB, wallShader, false, true, camera, movingObjsL3 + vec3(9.0, -8.3, 0.3));	  
-				  if (movingObjsL3[0] < -16) {
-			      movingObjsL3[0] = 4.0f;
-				  }
+
 
 		//Row 2 - left to right - Car 1
 		view->draw(&moving1RVB, moving1RV.size(), &moving1RCB, &moving1RNB, wallShader, false, true, camera, movingObjsR1 + vec3(-12.0, -6.8, 0.3));
-		if (movingObjsR1[0] > 4) {
-			movingObjsR1[0] = -12;
+		if (movingObjsR1[0] > 17.5) {
+			movingObjsR1[0] = -5;
 		}
 		    view->draw(&movingRVB, movingRV.size(), &movingRCB, &movingRNB, wallShader, false, true, camera, movingObjsR2 + vec3(-9.0, -6.8, 0.3));
-			if (movingObjsR2[0] > 5 ) {			
-				movingObjsR2[0] = -12;
+			if (movingObjsR2[0] > 15.5 ) {			
+				movingObjsR2[0] = -5;
 			}
-		view->draw(&moving1RVB, moving1RV.size(), &moving1RCB, &moving1RNB, wallShader, false, true, camera, movingObjsR3 + vec3(-6.0,-6.8, 0.3));
-		if (movingObjsR3[0] > 6) {
-			movingObjsR3[0] = -12;
-		}
+
 
 		//Row 3 - Right to Left - Car 1
 		    view->draw(&movingVB, movingV.size(), &movingCB, &movingNB, wallShader, false, true, camera, movingObjsL4 + vec3(6.0, -5.3, 0.3));
@@ -633,54 +598,70 @@ void Model::play() {
 		if (movingObjsL5[0] < -16) {
 			movingObjsL5[0] = 4.0;
 		}
-		    view->draw(&movingVB, movingV.size(), &movingCB, &movingNB, wallShader, false, true, camera, movingObjsL6 + vec3(12.0, -5.3, 0.3));
-			if (movingObjsL6[0] < -19) {
-				movingObjsL6[0] = 4.0;
-			}
 
 		//Row 4 - L to R -Car 1
 		    view->draw(&movingRVB, movingRV.size(), &movingRCB, &movingRNB, playerShader, false, true, camera, movingObjsR4 + vec3(-15.0, -3.8, 0.3));
+			if (movingObjsR4[0] > 20) {
+				movingObjsR4[0] = -5;
+			}
 		view->draw(&moving1RVB, moving1RV.size(), &moving1RCB, &moving1RNB, playerShader, false, true, camera, movingObjsR5 + vec3(-12.0, -3.8, 0.3));
-		      view->draw(&movingRVB, movingRV.size(), &movingRCB, &movingRNB, wallShader, false, true, camera, movingObjsR6 + vec3(-9.0, -3.8, 0.3));
+		if (movingObjsR5[0] > 18.5) {
+			movingObjsR5[0] = -2;
+		}
 
 		//Row 5 R to L - Car 1
 			  view->draw(&movingVB, movingV.size(), &movingCB, &movingNB, playerShader, false, true, camera, movingObjsL7 + vec3(3.0, -1.3, 0.3));
 			  if (movingObjsL7[0] < -10) {
-				  movingObjsL7 += vec3(30, 0, 0);
-				  movingObjsL7[0] = 4;
+				  movingObjsL7[0] = 4.0f;
 			  }
 			  //Car 2
 			  view->draw(&moving1VB, moving1V.size(), &moving1CB, &moving1NB, playerShader, false, true, camera, movingObjsL8 + vec3(6.0, -1.3, 0.3));
-			  if (movingObjsL8[0] < -12) {
-				  movingObjsL8 += vec3(28, 0, 0);
-				  movingObjsL8[0] = 4.2;
+			  if (movingObjsL8[0] < -13) {
+				  movingObjsL8[0] = 4.0f;
 			  }
-			  //Car 3
-			  view->draw(&movingVB, movingV.size(), &movingCB, &movingNB, wallShader, false, true, camera, movingObjsL9 + vec3(9.0, -1.3, 0.3));
-			  if (movingObjsL9[0] < -15) {
-				  movingObjsL9 += vec3(26, 0, 0);
-				  movingObjsL9[0] = 4.4;
-			  }
+
 
 		//row6
 		view->draw(&moving1RVB, moving1RV.size(), &moving1RCB, &moving1RNB, wallShader, false, true, camera, movingObjsR7 + vec3(-9.0, 0.2, 0.3));
+		if (movingObjsR2[0] > 15.5) {
+			movingObjsR2[0] = -5;
+		}
 		    view->draw(&movingRVB, movingRV.size(), &movingRCB, &movingRNB, wallShader, false, true, camera, movingObjsR8 + vec3(-6.0, 0.2, 0.3));
-		view->draw(&moving1RVB, moving1RV.size(), &moving1RCB, &moving1RNB, wallShader, false, true, camera, movingObjsR9 + vec3(-3.0, 0.2, 0.3));
+			if (movingObjsR2[0] > 12.5) {
+				movingObjsR2[0] = -5;
+			}
 
-		//row7
+		//Row 7 Right to left Fast
 		    view->draw(&movingVB, movingV.size(), &movingCB, &movingNB, wallShader, false, true, camera, movingObjsLF1 + vec3(4.0, 3.0, 0.3));
+			if (movingObjsLF1[0] < -9) {
+				movingObjsLF1[0] = 4.0f;
+			}
 		view->draw(&moving1VB, moving1V.size(), &moving1CB, &moving1NB, wallShader, false, true, camera, movingObjsLF2 + vec3(7.0, 3.0, 0.3));
-		    view->draw(&movingVB, movingV.size(), &movingCB, &movingNB, wallShader, false, true, camera, movingObjsLF3 + vec3(10.0,3.0, 0.3));
+		if (movingObjsLF2[0] < -12) {
+			movingObjsLF2[0] = 4.0f;
+		}
 
 		//row8
 		view->draw(&moving1RVB, moving1RV.size(), &moving1RCB, &moving1RNB, wallShader, false, true, camera, movingObjsRF1 + vec3(-15.0, 5.0, 0.3));
+		if (movingObjsRF1[0] > 20) {
+			movingObjsRF1[0] = -5;
+		}
 			view->draw(&movingRVB, movingRV.size(), &movingRCB, &movingRNB, wallShader, false, true, camera, movingObjsRF2 + vec3(-12.0, 5.0, 0.3));
-		view->draw(&moving1RVB, moving1RV.size(), &moving1RCB, &moving1RNB, wallShader, false, true, camera, movingObjsRF3 + vec3(-9.0, 5.0, 0.3));
+			if (movingObjsRF2[0] > 18.5) {
+				movingObjsRF2[0] = -5;
+			}
 
-		//row9
+
+		//row9 right to left fast
 		     view->draw(&movingVB, movingV.size(), &movingCB, &movingNB, wallShader, false, true, camera, movingObjsLF4 + vec3(4.0, 7.0, 0.3));
+			 if (movingObjsLF4[0] < -10) {
+				 movingObjsLF4[0] = 4.0f;
+			 }
 		view->draw(&moving1VB, moving1V.size(), &moving1CB, &moving1NB, wallShader, false, true, camera, movingObjsLF5 + vec3(7.0, 7.0, 0.3));
-		    view->draw(&movingVB, movingV.size(), &movingCB, &movingNB, wallShader, false, true, camera, movingObjsLF6 + vec3(10.0, 7.0, 0.3));
+		if (movingObjsLF5[0] < -13) {
+			movingObjsLF5[0] = 4.0f;
+		}
+
 
 
 		//player movement
@@ -735,7 +716,6 @@ GLFWwindow* Model::getGameWindow() {
 }
 
 
-
 vec3 Model::playerInput(vec3 playerTrans, BoundingBox* _playerBB) {
 	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
 		//std::cout << "Up Pressed" << std::endl;
@@ -771,7 +751,6 @@ vec3 Model::playerInput(vec3 playerTrans, BoundingBox* _playerBB) {
 
 	}
 	return playerTrans;
-
 }
 
 void Model::handleCollision(BoundingBox* player, BoundingBox* object) {
