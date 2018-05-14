@@ -1,7 +1,6 @@
 #include "view.hpp"
 int widthV;
 int heightV;
-bool once = false;
 std::string lightProj = "projection";
 std::string lightView = "view";
 std::string lightMod = "model";
@@ -19,7 +18,7 @@ View::~View() {
 }
 
 void View::draw(GLuint *vbuffer, int vsize, GLuint *cbuffer, GLuint *nbuffer, GLuint program, bool isPlayer, Camera camera, vec3 playerTrans) {
-	glUseProgram(program);	
+	glUseProgram(program);
 
 	// 1rst attribute buffer : vertices
 	glEnableVertexAttribArray(0);
@@ -57,10 +56,16 @@ void View::draw(GLuint *vbuffer, int vsize, GLuint *cbuffer, GLuint *nbuffer, GL
 	glUniformMatrix4fv(glGetUniformLocation(program, lightView.c_str()), 1, GL_FALSE, &view[0][0]);
 
 	model = mat4();
+	//model = translate(model, vec3(0.0, 0.0, 0.0));
+	model = scale(model, vec3(0.2f)); 	
+	model = rotate(model, (float)0.5, vec3(-45.0f, 0.0f, 0.0f));
+	//model = rotate(model, (float)glfwGetTime(), vec3(0.0f, 1.0f, 1.0f));
+
 	if (isPlayer == true) {
 		model = translate(model, playerTrans);
-		//model = scale(model, vec3(0.2f));
-		//model = rotate(model, (float)glfwGetTime(), vec3(0.0f, 1.0f, 1.0f));
+				//model = scale(model, vec3(0.2f));
+				//model = rotate(model, (float)glfwGetTime(), vec3(0.0f, 1.0f, 1.0f));
+			
 	}
 
 	//Update lighting position	
