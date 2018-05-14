@@ -5,9 +5,10 @@ int widthM;
 View* view;
 GLFWwindow* window;
 GLuint vertexbuffer;
-GLuint programID;
-GLuint programID2;
-GLuint light;
+GLuint playerShader;
+GLuint greenShader;
+GLuint wallShader;
+GLuint floorShader;
 
 /*void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -86,28 +87,28 @@ void Model::play() {
 	//Floor
 	std::vector<glm::vec3> floorV;
 	std::vector<glm::vec2> floorUV;
-	std::vector<glm::vec3> floorLN; 
+	std::vector<glm::vec3> floorLN;
 
 	//Player
 	std::vector<glm::vec3> playerV;
-	std::vector<glm::vec2> playerUV; 
-	std::vector<glm::vec3> playerLN; 
+	std::vector<glm::vec2> playerUV;
+	std::vector<glm::vec3> playerLN;
 
 	//LeftWall
 	std::vector<glm::vec3> leftWV;
-	std::vector<glm::vec2> leftWUV; 
-	std::vector<glm::vec3> leftWLN; 
+	std::vector<glm::vec2> leftWUV;
+	std::vector<glm::vec3> leftWLN;
 
 	//RightWall
 	std::vector<glm::vec3> rightWV;
-	std::vector<glm::vec2> rightWUV; 
-	std::vector<glm::vec3> rightWLN; 
+	std::vector<glm::vec2> rightWUV;
+	std::vector<glm::vec3> rightWLN;
 
 	//MovingObject
 	std::vector<glm::vec3> movingV;
-	std::vector<glm::vec2> movingUV; 
-	std::vector<glm::vec3> movingLN; 
-		
+	std::vector<glm::vec2> movingUV;
+	std::vector<glm::vec3> movingLN;
+
 	//Barriers
 
 	//1
@@ -152,7 +153,7 @@ void Model::play() {
 	bool leftwall = loadOBJ("leftWall.obj", leftWV, leftWUV, leftWLN);
 	bool rightwall = loadOBJ("rightWall.obj", rightWV, rightWUV, rightWLN);
 	bool movingObj = loadOBJ("movingObject.obj", movingV, movingUV, movingLN);
-	
+
 	bool barrier1 = loadOBJ("barrier1.obj", b1V, b1UV, b1LN);
 	bool barrier2 = loadOBJ("barrier2.obj", b2V, b2UV, b2LN);
 	bool barrier3 = loadOBJ("barrier3.obj", b3V, b3UV, b3LN);
@@ -160,7 +161,7 @@ void Model::play() {
 	bool barrier5 = loadOBJ("barrier5.obj", b5V, b5UV, b5LN);
 	bool barrier6 = loadOBJ("barrier6.obj", b6V, b6UV, b6LN);
 	bool barrier7 = loadOBJ("barrier7.obj", b7V, b7UV, b7LN);
-	
+
 
 	//Floor
 	GLuint floorVB;
@@ -192,7 +193,7 @@ void Model::play() {
 	GLuint playerNB;
 	glGenBuffers(1, &playerNB);
 	glBindBuffer(GL_ARRAY_BUFFER, playerNB);
-	glBufferData(GL_ARRAY_BUFFER, playerLN.size() * sizeof(glm::vec3), &playerLN[0], GL_STATIC_DRAW); 
+	glBufferData(GL_ARRAY_BUFFER, playerLN.size() * sizeof(glm::vec3), &playerLN[0], GL_STATIC_DRAW);
 
 
 	//leftWall
@@ -359,11 +360,13 @@ void Model::play() {
 	glBindBuffer(GL_ARRAY_BUFFER, barrier7NB);
 	glBufferData(GL_ARRAY_BUFFER, b7LN.size() * sizeof(glm::vec3), &b7LN[0], GL_STATIC_DRAW);
 
-	
+
 	//Programs
-	programID = LoadShaders("SimpleVertexShader.hlsl", "SimpleFragmentShader.hlsl");
-	programID2 = LoadShaders("GreenVertexShader.hlsl", "GreenFragmentShader.hlsl");
-	light = LoadShaders("LightingVertexShader.hlsl", "LightingFragmentShader.hlsl");
+	playerShader = LoadShaders("Shaders/PlayerVertexShader.hlsl", "Shaders/PlayerFragmentShader.hlsl");
+	greenShader = LoadShaders("Shaders/GreenVertexShader.hlsl", "Shaders/GreenFragmentShader.hlsl");
+	wallShader = LoadShaders("Shaders/WallVertexShader.hlsl", "Shaders/WallFragmentShader.hlsl");
+	floorShader = LoadShaders("Shaders/FloorVertexShader.hlsl", "Shaders/FloorFragmentShader.hlsl");
+
 	vec3 playerTrans;
 
 	do {
@@ -380,7 +383,7 @@ void Model::play() {
 		//view->draw(&vertexbuffer, vertices.size(), &colorbuffer, &normalbuffer, programID2, true, camera);
 		//view->draw(&vertexbuffer2, vertices2.size(), &colorbuffer2, &normalbuffer2, light, true, camera);
 		//view->draw(&LightingVB, LightingV.size(), &LightingCB, &LightingNB, light, true, camera);
-		view->draw(&floorVB, floorV.size(), &floorCB, &floorNB, light, false, camera, vec3 (0.0,0.0,0.0));
+		view->draw(&floorVB, floorV.size(), &floorCB, &floorNB, light, false, camera, vec3(0.0, 0.0, 0.0));
 		view->draw(&leftWVB, leftWV.size(), &leftWCB, &leftWNB, light, false, camera, vec3(0.0, 0.0, 0.0));
 		view->draw(&rightWVB, rightWV.size(), &rightWCB, &rightWNB, light, false, camera, vec3(0.0, 0.0, 0.0));
 		view->draw(&movingVB, movingV.size(), &movingCB, &movingNB, light, false, camera, vec3(0.0, 0.0, 0.0));
@@ -405,9 +408,10 @@ void Model::play() {
 		glfwWindowShouldClose(window) == 0);
 
 	// Cleanup VBO and shader
-	glDeleteProgram(programID);
-	glDeleteProgram(light);
-	glDeleteProgram(programID2);
+	glDeleteProgram(playerShader);
+	glDeleteProgram(greenshader);
+	glDeleteProgram(wallShader);
+	glDeleteProgram(floorShader);
 
 
 	glDeleteBuffers(1, &floorVB);
@@ -440,48 +444,48 @@ vec3 Model::playerInput(vec3 playerTrans) {
 		std::cout << playerTrans.y << std::endl;
 		playerTrans = playerTrans + vec3(0.0f, 0.1f, 0.0f);
 		glfwGetKey(window, GLFW_KEY_UP);
-		
+
 	}
 	else if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
 		std::cout << "Down Pressed" << std::endl;
 		std::cout << playerTrans.y << std::endl;
 		playerTrans = playerTrans + vec3(0.0f, -0.1f, 0.0f);
 		glfwGetKey(window, GLFW_KEY_DOWN);
-		
+
 	}
-	
-		if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
 		std::cout << "Left Pressed" << std::endl;
 		std::cout << playerTrans.x << std::endl;
 		playerTrans = playerTrans + vec3(-0.1f, 0.0f, 0.0f);
 		glfwGetKey(window, GLFW_KEY_LEFT);
-		
+
 	}
 	else if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
 		std::cout << "Right Pressed" << std::endl;
 		std::cout << playerTrans.x << std::endl;
 		playerTrans = playerTrans + vec3(0.1f, 0.0f, 0.0f);
 		glfwGetKey(window, GLFW_KEY_RIGHT);
-		
+
 	}
 	return playerTrans;
-	
+
 }
 
 /*void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
-	if (firstMouse)
-	{
-		lastX = xpos;
-		lastY = ypos;
-		firstMouse = false;
-	}
+if (firstMouse)
+{
+lastX = xpos;
+lastY = ypos;
+firstMouse = false;
+}
 
-	float xoffset = xpos - lastX;
-	float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+float xoffset = xpos - lastX;
+float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
 
-	lastX = xpos;
-	lastY = ypos;
+lastX = xpos;
+lastY = ypos;
 
-	camera.ProcessMouseMovement(xoffset, yoffset);
+camera.ProcessMouseMovement(xoffset, yoffset);
 }*/
