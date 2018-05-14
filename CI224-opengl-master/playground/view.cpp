@@ -6,8 +6,8 @@ std::string lightProj = "projection";
 std::string lightView = "view";
 std::string lightMod = "model";
 vec3 lightPos(-4, 8, 0);
-//std::string lightPoss = "lightPos"; 
-std::string lightPoss = "LightPosition_worldspace";
+std::string lightPoss = "lightPos"; 
+//std::string lightPoss = "LightPosition_worldspace";
 
 View::View(int widtht, int heightt) {
 	widthV = widtht;
@@ -56,19 +56,19 @@ void View::draw(GLuint *vbuffer, int vsize, GLuint *cbuffer, GLuint *nbuffer, GL
 	glUniformMatrix4fv(glGetUniformLocation(program, lightProj.c_str()), 1, GL_FALSE, &projection[0][0]);
 	glUniformMatrix4fv(glGetUniformLocation(program, lightView.c_str()), 1, GL_FALSE, &view[0][0]);
 
-	if (islight) {
-		model = mat4();
-		//model = translate(model, lightPos);
-		//model = scale(model, vec3(0.2f));
+	model = mat4();
+	//model = translate(model, lightPos);
+	//model = scale(model, vec3(0.2f));
+	model = rotate(model, (float)glfwGetTime(), vec3(0.0f, 1.0f, 1.0f));
 
-		//Update lighting position	
-		glUniform3fv(glGetUniformLocation(program, lightPoss.c_str()), 1, &lightPos[0]);
-	}
+	//Update lighting position	
+	glUniform3fv(glGetUniformLocation(program, lightPoss.c_str()), 1, &lightPos[0]);
+
 	glUniformMatrix4fv(glGetUniformLocation(program, lightMod.c_str()), 1, GL_FALSE, &model[0][0]);
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	// Draw the triangles
-	glDrawArrays(GL_TRIANGLES, 0, vsize * sizeof(glm::vec3));
+	glDrawArrays(GL_TRIANGLES, 0, vsize);
 
 	glDisableVertexAttribArray(0);	
 }

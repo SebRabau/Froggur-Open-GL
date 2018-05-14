@@ -94,7 +94,7 @@ void Model::play() {
 	
 	bool res = loadOBJ("test.obj", vertices, uvs, normals);
 	bool res2 = loadOBJ("test2.obj", vertices2, uvs2, normals2);
-	bool Lighting = loadOBJ("test2.obj", LightingV, LightingUV, LightingN);
+	bool teapot = loadOBJ("test3.obj", LightingV, LightingUV, LightingN);
 
 	//Object 1
 	GLuint vertexbuffer;
@@ -158,9 +158,9 @@ void Model::play() {
 		// Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		//view->draw(&vertexbuffer, vertices.size(), programID, light);
-		view->draw(&vertexbuffer2, vertices2.size(), &colorbuffer, &normalbuffer, light, true, camera);
-		//view->draw(&LightingVB, LightingV.size(), &LightingCB, &LightingNB, light, true, camera);
+		//view->draw(&vertexbuffer, vertices.size(), &colorbuffer, &normalbuffer, programID2, true, camera);
+		//view->draw(&vertexbuffer2, vertices2.size(), &colorbuffer2, &normalbuffer2, light, true, camera);
+		view->draw(&LightingVB, LightingV.size(), &LightingCB, &LightingNB, light, true, camera);
 
 		// Swap buffers
 		glfwSwapBuffers(window);
