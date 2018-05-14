@@ -623,12 +623,12 @@ void Model::play() {
 
 		//row6
 		view->draw(&moving1RVB, moving1RV.size(), &moving1RCB, &moving1RNB, wallShader, false, true, camera, movingObjsR7 + vec3(-9.0, 0.2, 0.3));
-		if (movingObjsR2[0] > 15.5) {
-			movingObjsR2[0] = -5;
+		if (movingObjsR7[0] > 15.5) {
+			movingObjsR7[0] = -5;
 		}
 		    view->draw(&movingRVB, movingRV.size(), &movingRCB, &movingRNB, wallShader, false, true, camera, movingObjsR8 + vec3(-6.0, 0.2, 0.3));
-			if (movingObjsR2[0] > 12.5) {
-				movingObjsR2[0] = -5;
+			if (movingObjsR8[0] > 12.5) {
+				movingObjsR8[0] = -5;
 			}
 
 		//Row 7 Right to left Fast
