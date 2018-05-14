@@ -9,6 +9,7 @@ GLuint playerShader;
 GLuint greenShader;
 GLuint wallShader;
 GLuint floorShader;
+vec3 playerTrans;
 
 /*void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -123,7 +124,7 @@ void Model::play() {
 	std::vector<glm::vec3> moving1RV;
 	std::vector<glm::vec2> moving1RUV;
 	std::vector<glm::vec3> moving1RLN;
-
+  
 	//Barriers
 
 	//1
@@ -425,15 +426,42 @@ void Model::play() {
 	glGenBuffers(1, &barrier7NB);
 	glBindBuffer(GL_ARRAY_BUFFER, barrier7NB);
 	glBufferData(GL_ARRAY_BUFFER, b7LN.size() * sizeof(glm::vec3), &b7LN[0], GL_STATIC_DRAW);
+  
+	//bounding boxes
+	BoundingBox* playerBB = new BoundingBox(playerV);
 
+	BoundingBox* leftWBB = new BoundingBox(leftWV);
+	leftWBB->initialise();
+
+	BoundingBox* rightWBB = new BoundingBox(rightWV);
+	rightWBB->initialise();
+
+	BoundingBox* b1BB = new BoundingBox(b1V);
+	b1BB->initialise();
+
+	BoundingBox* b2BB = new BoundingBox(b2V);
+	b2BB->initialise();
+
+	BoundingBox* b3BB = new BoundingBox(b3V);
+	b3BB->initialise();
+
+	BoundingBox* b4BB = new BoundingBox(b4V);
+	b4BB->initialise();
+
+	BoundingBox* b5BB = new BoundingBox(b5V);
+	b5BB->initialise();
+
+	BoundingBox* b6BB = new BoundingBox(b6V);
+	b6BB->initialise();
+
+	BoundingBox* b7BB = new BoundingBox(b7V);
+	b7BB->initialise();
 
 	//Programs
 	playerShader = LoadShaders("Shaders/PlayerVertexShader.hlsl", "Shaders/PlayerFragmentShader.hlsl");
 	greenShader = LoadShaders("Shaders/GreenVertexShader.hlsl", "Shaders/GreenFragmentShader.hlsl");
 	wallShader = LoadShaders("Shaders/WallVertexShader.hlsl", "Shaders/WallFragmentShader.hlsl");
 	floorShader = LoadShaders("Shaders/FloorVertexShader.hlsl", "Shaders/FloorFragmentShader.hlsl");
-
-	vec3 playerTrans;
 
 	//Left vector Movement
 	vec3 movingObjsL1;
@@ -469,19 +497,27 @@ void Model::play() {
 	vec3 movingObjsRF2;
 	vec3 movingObjsRF3;
 
-
-
 	do {
+		playerBB->initialise();
 		//Enable depth test
 		glEnable(GL_DEPTH_TEST);
 		//Accept fragment if it is closer to the camera
 		glDepthFunc(GL_LESS);
 
-		playerTrans = playerInput(playerTrans);
+		playerTrans = playerInput(playerTrans, playerBB);
+		handleCollision(playerBB, leftWBB);
+		handleCollision(playerBB, rightWBB);
+		handleCollision(playerBB, b1BB);
+		handleCollision(playerBB, b2BB);
+		handleCollision(playerBB, b3BB);
+		handleCollision(playerBB, b4BB);
+		handleCollision(playerBB, b5BB);
+		handleCollision(playerBB, b6BB);
+		handleCollision(playerBB, b7BB);
+
 
 		// Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 
 		view->draw(&floorVB, floorV.size(), &floorCB, &floorNB, floorShader, false, false, camera, vec3(0.0, 0.0, 0.0));
 		view->draw(&leftWVB, leftWV.size(), &leftWCB, &leftWNB, wallShader, false, false, camera, vec3(0.0, 0.0, 0.0));
@@ -661,18 +697,21 @@ GLFWwindow* Model::getGameWindow() {
 }
 
 
-vec3 Model::playerInput(vec3 playerTrans) {
+
+vec3 Model::playerInput(vec3 playerTrans, BoundingBox* _playerBB) {
 	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
 		//std::cout << "Up Pressed" << std::endl;
 		//std::cout << playerTrans.y << std::endl;
-		playerTrans = playerTrans + vec3(0.0f, 0.005f, 0.0f);
+		playerTrans = playerTrans + vec3(0.0f, 0.01f, 0.0f);
+		_playerBB->update(playerTrans);
 		glfwGetKey(window, GLFW_KEY_UP);
 
 	}
 	else if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-		/*std::cout << "Down Pressed" << std::endl;
-		std::cout << playerTrans.y << std::endl;*/
-		playerTrans = playerTrans + vec3(0.0f, -0.005f, 0.0f);
+		//std::cout << "Down Pressed" << std::endl;
+		//std::cout << playerTrans.y << std::endl;
+		playerTrans = playerTrans + vec3(0.0f, -0.01f, 0.0f);
+		_playerBB->update(playerTrans);
 		glfwGetKey(window, GLFW_KEY_DOWN);
 
 	}
@@ -680,14 +719,16 @@ vec3 Model::playerInput(vec3 playerTrans) {
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
 		//std::cout << "Left Pressed" << std::endl;
 		//std::cout << playerTrans.x << std::endl;
-		playerTrans = playerTrans + vec3(-0.005f, 0.0f, 0.0f);
+		playerTrans = playerTrans + vec3(-0.01f, 0.0f, 0.0f);
+		_playerBB->update(playerTrans);
 		glfwGetKey(window, GLFW_KEY_LEFT);
 
 	}
 	else if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
 		//std::cout << "Right Pressed" << std::endl;
 		//std::cout << playerTrans.x << std::endl;
-		playerTrans = playerTrans + vec3(0.005f, 0.0f, 0.0f);
+		playerTrans = playerTrans + vec3(0.01f, 0.0f, 0.0f);
+		_playerBB->update(playerTrans);
 		glfwGetKey(window, GLFW_KEY_RIGHT);
 
 	}
@@ -695,20 +736,14 @@ vec3 Model::playerInput(vec3 playerTrans) {
 
 }
 
-/*void mouse_callback(GLFWwindow* window, double xpos, double ypos)
-{
-if (firstMouse)
-{
-lastX = xpos;
-lastY = ypos;
-firstMouse = false;
+void Model::handleCollision(BoundingBox* player, BoundingBox* object) {
+	if (player->btl.x <= object->getMax().x && player->btr.x >= object->getMax().x && player->btr.y <= object->getMax().y && player->btr.y >= object->getMin().y) { //hit left
+		playerTrans += vec3(0.5, 0.0, 0.0);
+	} else if (player->btr.x >= object->getMin().x && player->btl.x <= object->getMin().x && player->btr.y <= object->getMax().y && player->btr.y >= object->getMin().y) { //hit right
+		playerTrans += vec3(-0.5, 0.0, 0.0);
+	} else if (player->btl.y >= object->getMin().y && player->bbl.y <= object->getMin().y && player->btl.x > object->getMin().x - 0.6 && player->btr.x < object->getMax().x + 0.6) { //hit top
+		playerTrans += vec3(0.0, -0.5, 0.0);
+	} else if (player->bbl.y <= object->getMax().y && player->btl.y >= object->getMax().y && player->bbl.x > object->getMin().x - 0.6 && player->btr.x < object->getMax().x + 0.6) { //hit bottom
+		playerTrans += vec3(0.0, 0.5, 0.0);
+	}
 }
-
-float xoffset = xpos - lastX;
-float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
-
-lastX = xpos;
-lastY = ypos;
-
-camera.ProcessMouseMovement(xoffset, yoffset);
-}*/

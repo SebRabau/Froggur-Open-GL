@@ -71,15 +71,19 @@ add_executable(playground
 	playground/controller.cpp
 	playground/controller.hpp
 	playground/Camera.h
+	playground/boundingBox.hpp
+	playground/boundingBox.cpp
+	playground/Camera.h
 	common/shader.cpp
 	common/shader.hpp
 	common/texture.cpp
 	common/texture.hpp
 	common/objloader.cpp
-  common/objloader.hpp
+  	common/objloader.hpp
 	common/controls.hpp
 	common/controls.cpp
-	playground/Camera.h 
+	common/text2D.cpp
+	common/text2D.hpp
 	${SRC_FILES}
 
 		
@@ -101,4 +105,3 @@ add_custom_command(
    TARGET playground POST_BUILD
    COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/playground${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/playground/"
 )
-

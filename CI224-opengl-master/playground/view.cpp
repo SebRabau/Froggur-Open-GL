@@ -4,7 +4,7 @@ int heightV;
 std::string lightProj = "projection";
 std::string lightView = "view";
 std::string lightMod = "model";
-vec3 lightPos(-4, 8, 0);
+vec3 lightPos(-2, 0, 3);
 std::string lightPoss = "lightPos"; 
 //std::string lightPoss = "LightPosition_worldspace";
 
