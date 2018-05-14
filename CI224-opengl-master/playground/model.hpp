@@ -25,6 +25,7 @@ using namespace glm;
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "boundingBox.hpp"
 
 
 class Model {
@@ -72,6 +73,8 @@ public:
 	void setPause(bool pauset);
 	bool getPause();
 
-	vec3 playerInput(vec3 playerTrans);
+	vec3 playerInput(vec3 playerTrans, BoundingBox* _playerBB);
+	void handleCollision(BoundingBox* player, BoundingBox* object);
+	vec3 booping(int _boop, vec3 playerTrans);
 };
 #endif
