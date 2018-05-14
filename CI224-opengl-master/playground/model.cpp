@@ -457,6 +457,12 @@ void Model::play() {
 	BoundingBox* b7BB = new BoundingBox(b7V);
 	b7BB->initialise();
 
+	BoundingBox* c1BB = new BoundingBox(movingV);
+	c1BB->initialise();
+
+	BoundingBox* c2BB = new BoundingBox(moving1V);
+	c2BB->initialise();
+
 	//Programs
 	playerShader = LoadShaders("Shaders/PlayerVertexShader.hlsl", "Shaders/PlayerFragmentShader.hlsl");
 	greenShader = LoadShaders("Shaders/GreenVertexShader.hlsl", "Shaders/GreenFragmentShader.hlsl");
@@ -505,6 +511,36 @@ void Model::play() {
 		glDepthFunc(GL_LESS);
 
 		playerTrans = playerInput(playerTrans, playerBB);
+
+		c1BB->update(movingObjsL1);
+		c1BB->update(movingObjsL2);
+		c1BB->update(movingObjsL3);
+		c1BB->update(movingObjsL4);
+		c1BB->update(movingObjsL5);
+		c1BB->update(movingObjsL6);
+		c1BB->update(movingObjsL7);
+		c1BB->update(movingObjsL8);
+		c1BB->update(movingObjsL9);
+		c1BB->update(movingObjsLF1);
+		c1BB->update(movingObjsLF2);
+		c1BB->update(movingObjsLF3);
+		c1BB->update(movingObjsLF4);
+		c1BB->update(movingObjsLF5);
+		c1BB->update(movingObjsLF6);
+
+		c2BB->update(movingObjsR1);
+		c2BB->update(movingObjsR2);
+		c2BB->update(movingObjsR3);
+		c2BB->update(movingObjsR4);
+		c2BB->update(movingObjsR5);
+		c2BB->update(movingObjsR6);
+		c2BB->update(movingObjsR7);
+		c2BB->update(movingObjsR8);
+		c2BB->update(movingObjsR9);
+		c2BB->update(movingObjsRF1);
+		c2BB->update(movingObjsRF2);
+		c2BB->update(movingObjsRF3);
+
 		handleCollision(playerBB, leftWBB);
 		handleCollision(playerBB, rightWBB);
 		handleCollision(playerBB, b1BB);
@@ -514,6 +550,8 @@ void Model::play() {
 		handleCollision(playerBB, b5BB);
 		handleCollision(playerBB, b6BB);
 		handleCollision(playerBB, b7BB);
+		handleCollision(playerBB, c1BB);
+		handleCollision(playerBB, c2BB);
 
 
 		// Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
