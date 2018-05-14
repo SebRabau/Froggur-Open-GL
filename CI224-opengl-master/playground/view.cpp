@@ -17,7 +17,7 @@ View::~View() {
 
 }
 
-void View::draw(GLuint *vbuffer, int vsize, GLuint *cbuffer, GLuint *nbuffer, GLuint program, bool isPlayer, Camera camera, vec3 playerTrans) {
+void View::draw(GLuint *vbuffer, int vsize, GLuint *cbuffer, GLuint *nbuffer, GLuint program, bool isPlayer, bool isObj, Camera camera, vec3 playerTrans) {
 	glUseProgram(program);
 
 	// 1rst attribute buffer : vertices
@@ -67,6 +67,13 @@ void View::draw(GLuint *vbuffer, int vsize, GLuint *cbuffer, GLuint *nbuffer, GL
 				//model = rotate(model, (float)glfwGetTime(), vec3(0.0f, 1.0f, 1.0f));
 			
 	}
+
+	if (isObj == true) {
+		model = translate(model, playerTrans);
+		
+	}
+
+
 
 	//Update lighting position	
 	glUniform3fv(glGetUniformLocation(program, lightPoss.c_str()), 1, &lightPos[0]);
