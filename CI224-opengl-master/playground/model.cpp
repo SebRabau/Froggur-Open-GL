@@ -380,20 +380,20 @@ void Model::play() {
 		//view->draw(&vertexbuffer, vertices.size(), &colorbuffer, &normalbuffer, programID2, true, camera);
 		//view->draw(&vertexbuffer2, vertices2.size(), &colorbuffer2, &normalbuffer2, light, true, camera);
 		//view->draw(&LightingVB, LightingV.size(), &LightingCB, &LightingNB, light, true, camera);
-		view->draw(&floorVB, floorV.size(), &floorCB, &floorNB, light, true, camera);
-		view->draw(&leftWVB, leftWV.size(), &leftWCB, &leftWNB, light, true, camera);
-		view->draw(&rightWVB, rightWV.size(), &rightWCB, &rightWNB, light, true, camera);
-		view->draw(&movingVB, movingV.size(), &movingCB, &movingNB, light, true, camera);
-		view->draw(&playerVB, playerV.size(), &playerCB, &playerNB, light, true, camera);
+		view->draw(&floorVB, floorV.size(), &floorCB, &floorNB, light, false, camera, vec3 (0.0,0.0,0.0));
+		view->draw(&leftWVB, leftWV.size(), &leftWCB, &leftWNB, light, false, camera, vec3(0.0, 0.0, 0.0));
+		view->draw(&rightWVB, rightWV.size(), &rightWCB, &rightWNB, light, false, camera, vec3(0.0, 0.0, 0.0));
+		view->draw(&movingVB, movingV.size(), &movingCB, &movingNB, light, false, camera, vec3(0.0, 0.0, 0.0));
+		view->draw(&playerVB, playerV.size(), &playerCB, &playerNB, light, true, camera, playerTrans);
 
 		//barriers
-		view->draw(&barrier1VB, b1V.size(), &barrier1CB, &barrier1NB, light, true, camera);
-		view->draw(&barrier2VB, b2V.size(), &barrier2CB, &barrier2NB, light, true, camera);
-		view->draw(&barrier3VB, b3V.size(), &barrier3CB, &barrier3NB, light, true, camera);
-		view->draw(&barrier4VB, b4V.size(), &barrier4CB, &barrier4NB, light, true, camera);
-		view->draw(&barrier5VB, b5V.size(), &barrier5CB, &barrier5NB, light, true, camera);
-		view->draw(&barrier6VB, b6V.size(), &barrier6CB, &barrier6NB, light, true, camera);
-		view->draw(&barrier7VB, b7V.size(), &barrier7CB, &barrier7NB, light, true, camera);
+		view->draw(&barrier1VB, b1V.size(), &barrier1CB, &barrier1NB, light, false, camera, vec3(0.0, 0.0, 0.0));
+		view->draw(&barrier2VB, b2V.size(), &barrier2CB, &barrier2NB, light, false, camera, vec3(0.0, 0.0, 0.0));
+		view->draw(&barrier3VB, b3V.size(), &barrier3CB, &barrier3NB, light, false, camera, vec3(0.0, 0.0, 0.0));
+		view->draw(&barrier4VB, b4V.size(), &barrier4CB, &barrier4NB, light, false, camera, vec3(0.0, 0.0, 0.0));
+		view->draw(&barrier5VB, b5V.size(), &barrier5CB, &barrier5NB, light, false, camera, vec3(0.0, 0.0, 0.0));
+		view->draw(&barrier6VB, b6V.size(), &barrier6CB, &barrier6NB, light, false, camera, vec3(0.0, 0.0, 0.0));
+		view->draw(&barrier7VB, b7V.size(), &barrier7CB, &barrier7NB, light, false, camera, vec3(0.0, 0.0, 0.0));
 
 		// Swap buffers
 		glfwSwapBuffers(window);
@@ -435,37 +435,37 @@ GLFWwindow* Model::getGameWindow() {
 
 
 vec3 Model::playerInput(vec3 playerTrans) {
-	-if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-		-std::cout << "Up Pressed" << std::endl;
-		-std::cout << playerTrans.y << std::endl;
-		-playerTrans = playerTrans + vec3(0.0f, 0.001f, 0.0f);
-		-glfwGetKey(window, GLFW_KEY_UP);
-		-
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+		std::cout << "Up Pressed" << std::endl;
+		std::cout << playerTrans.y << std::endl;
+		playerTrans = playerTrans + vec3(0.0f, 0.1f, 0.0f);
+		glfwGetKey(window, GLFW_KEY_UP);
+		
 	}
-	-else if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-		-std::cout << "Down Pressed" << std::endl;
-		-std::cout << playerTrans.y << std::endl;
-		-playerTrans = playerTrans + vec3(0.0f, -0.001f, 0.0f);
-		-glfwGetKey(window, GLFW_KEY_DOWN);
-		-
+	else if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+		std::cout << "Down Pressed" << std::endl;
+		std::cout << playerTrans.y << std::endl;
+		playerTrans = playerTrans + vec3(0.0f, -0.1f, 0.0f);
+		glfwGetKey(window, GLFW_KEY_DOWN);
+		
 	}
-	-
-		-if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
-		-std::cout << "Left Pressed" << std::endl;
-		-std::cout << playerTrans.x << std::endl;
-		-playerTrans = playerTrans + vec3(-0.001f, 0.0f, 0.0f);
-		-glfwGetKey(window, GLFW_KEY_LEFT);
-		-
+	
+		if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+		std::cout << "Left Pressed" << std::endl;
+		std::cout << playerTrans.x << std::endl;
+		playerTrans = playerTrans + vec3(-0.1f, 0.0f, 0.0f);
+		glfwGetKey(window, GLFW_KEY_LEFT);
+		
 	}
-	-else if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
-		-std::cout << "Right Pressed" << std::endl;
-		-std::cout << playerTrans.x << std::endl;
-		-playerTrans = playerTrans + vec3(0.001f, 0.0f, 0.0f);
-		-glfwGetKey(window, GLFW_KEY_RIGHT);
-		-
+	else if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+		std::cout << "Right Pressed" << std::endl;
+		std::cout << playerTrans.x << std::endl;
+		playerTrans = playerTrans + vec3(0.1f, 0.0f, 0.0f);
+		glfwGetKey(window, GLFW_KEY_RIGHT);
+		
 	}
-	-return playerTrans;
-	-
+	return playerTrans;
+	
 }
 
 /*void mouse_callback(GLFWwindow* window, double xpos, double ypos)
