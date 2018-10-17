@@ -422,6 +422,7 @@ void Model::play() {
 	
 	//bounding boxes
 	BoundingBox* playerBB = new BoundingBox(playerV);
+	playerBB->initialise();
 
 	BoundingBox* leftWBB = new BoundingBox(leftWV);
 	leftWBB->initialise();
@@ -449,12 +450,6 @@ void Model::play() {
 
 	BoundingBox* b7BB = new BoundingBox(b7V);
 	b7BB->initialise();
-
-	BoundingBox* c1BB = new BoundingBox(movingV);
-	c1BB->initialise();
-
-	BoundingBox* c2BB = new BoundingBox(moving1V);
-	c2BB->initialise();
 	
 	//Programs
 	playerShader = LoadShaders("Shaders/PlayerVertexShader.hlsl", "Shaders/PlayerFragmentShader.hlsl");
@@ -487,36 +482,16 @@ void Model::play() {
 	vec3 movingObjsRF1;
 	vec3 movingObjsRF2;
 
+	
 
 
 	do {
-		playerBB->initialise();
 		//Enable depth test
 		glEnable(GL_DEPTH_TEST);
 		//Accept fragment if it is closer to the camera
 		glDepthFunc(GL_LESS);
 
 		playerTrans = playerInput(playerTrans, playerBB);
-
-		c1BB->update(movingObjsL1);
-		c1BB->update(movingObjsL2);
-		c1BB->update(movingObjsL4);
-		c1BB->update(movingObjsL5);
-		c1BB->update(movingObjsL7);
-		c1BB->update(movingObjsL8);
-		c1BB->update(movingObjsLF1);
-		c1BB->update(movingObjsLF2);
-		c1BB->update(movingObjsLF4);
-		c1BB->update(movingObjsLF5);
-
-		c2BB->update(movingObjsR1);
-		c2BB->update(movingObjsR2);
-		c2BB->update(movingObjsR4);
-		c2BB->update(movingObjsR5);
-		c2BB->update(movingObjsR7);
-		c2BB->update(movingObjsR8);
-		c2BB->update(movingObjsRF1);
-		c2BB->update(movingObjsRF2);
 
 		handleCollision(playerBB, leftWBB);
 		handleCollision(playerBB, rightWBB);
@@ -527,8 +502,6 @@ void Model::play() {
 		handleCollision(playerBB, b5BB);
 		handleCollision(playerBB, b6BB);
 		handleCollision(playerBB, b7BB);
-		handleCollision(playerBB, c1BB);
-		handleCollision(playerBB, c2BB);
 
 		// Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -721,7 +694,7 @@ vec3 Model::playerInput(vec3 playerTrans, BoundingBox* _playerBB) {
 		//std::cout << "Up Pressed" << std::endl;
 		//std::cout << playerTrans.y << std::endl;
 		playerTrans = playerTrans + vec3(0.0f, 0.01f, 0.0f);
-		_playerBB->update(playerTrans);
+		_playerBB->update(vec3(0.0f, 0.01f, 0.0f));
 		glfwGetKey(window, GLFW_KEY_UP);
 
 	}
@@ -729,7 +702,7 @@ vec3 Model::playerInput(vec3 playerTrans, BoundingBox* _playerBB) {
 		//std::cout << "Down Pressed" << std::endl;
 		//std::cout << playerTrans.y << std::endl;
 		playerTrans = playerTrans + vec3(0.0f, -0.01f, 0.0f);
-		_playerBB->update(playerTrans);
+		_playerBB->update(vec3(0.0f, -0.01f, 0.0f));
 		glfwGetKey(window, GLFW_KEY_DOWN);
 
 	}
@@ -738,7 +711,7 @@ vec3 Model::playerInput(vec3 playerTrans, BoundingBox* _playerBB) {
 		//std::cout << "Left Pressed" << std::endl;
 		//std::cout << playerTrans.x << std::endl;
 		playerTrans = playerTrans + vec3(-0.01f, 0.0f, 0.0f);
-		_playerBB->update(playerTrans);
+		_playerBB->update(vec3(-0.01f, 0.0f, 0.0f));
 		glfwGetKey(window, GLFW_KEY_LEFT);
 
 	}
@@ -746,7 +719,7 @@ vec3 Model::playerInput(vec3 playerTrans, BoundingBox* _playerBB) {
 		//std::cout << "Right Pressed" << std::endl;
 		//std::cout << playerTrans.x << std::endl;
 		playerTrans = playerTrans + vec3(0.01f, 0.0f, 0.0f);
-		_playerBB->update(playerTrans);
+		_playerBB->update(vec3(0.01f, 0.0f, 0.0f));
 		glfwGetKey(window, GLFW_KEY_RIGHT);
 
 	}
@@ -756,11 +729,16 @@ vec3 Model::playerInput(vec3 playerTrans, BoundingBox* _playerBB) {
 void Model::handleCollision(BoundingBox* player, BoundingBox* object) {
 	if (player->btl.x <= object->getMax().x && player->btr.x >= object->getMax().x && player->btr.y <= object->getMax().y && player->btr.y >= object->getMin().y) { //hit left
 		playerTrans += vec3(0.5, 0.0, 0.0);
+		player->update(vec3(0.5, 0.0, 0.0));
+		
 	} else if (player->btr.x >= object->getMin().x && player->btl.x <= object->getMin().x && player->btr.y <= object->getMax().y && player->btr.y >= object->getMin().y) { //hit right
 		playerTrans += vec3(-0.5, 0.0, 0.0);
+		player->update(vec3(-0.5, 0.0, 0.0));
 	} else if (player->btl.y >= object->getMin().y && player->bbl.y <= object->getMin().y && player->btl.x > object->getMin().x - 0.6 && player->btr.x < object->getMax().x + 0.6) { //hit top
 		playerTrans += vec3(0.0, -0.5, 0.0);
+		player->update(vec3(0.0, -0.5, 0.0));
 	} else if (player->bbl.y <= object->getMax().y && player->btl.y >= object->getMax().y && player->bbl.x > object->getMin().x - 0.6 && player->btr.x < object->getMax().x + 0.6) { //hit bottom
 		playerTrans += vec3(0.0, 0.5, 0.0);
+		player->update(vec3(0.0, 0.5, 0.0));
 	}
 }

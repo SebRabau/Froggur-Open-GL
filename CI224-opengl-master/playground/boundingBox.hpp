@@ -43,7 +43,7 @@ public:
 	
 	BoundingBox(std::vector<glm::vec3> _vertices);
 	void initialise();
-	void update(vec3 playerTrans);
+	void update(vec3 dir);
 	vec3 getMin();
 	vec3 getMax();
 };

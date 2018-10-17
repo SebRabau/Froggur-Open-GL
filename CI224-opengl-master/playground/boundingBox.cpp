@@ -2,6 +2,8 @@
 
 std::vector<glm::vec3> verticesBB;
 
+using namespace std;
+
 vec3 boundingBoxMin;
 vec3 boundingBoxMax;
 
@@ -50,37 +52,18 @@ void BoundingBox::initialise() {
 
 }
 
-void BoundingBox::update(vec3 playerTrans) {
-	/*for (int i = 0; verticesBB.size(); i++) {
-		verticesBB[i] = verticesBB[i] + playerTrans;
-	}*/
+void BoundingBox::update(vec3 dir) {
 
-	boundingBoxMin.x = boundingBoxMax.x = verticesBB[0].x;
-	boundingBoxMin.y = boundingBoxMax.y = verticesBB[0].y;
-	boundingBoxMin.z = boundingBoxMax.z = verticesBB[0].z;
-	for (int i = 0; i < verticesBB.size(); i++) {
-		if (verticesBB[i].x < boundingBoxMin.x)
-			boundingBoxMin.x = verticesBB[i].x;
-		if (verticesBB[i].x > boundingBoxMax.x)
-			boundingBoxMax.x = verticesBB[i].x;
-		if (verticesBB[i].y < boundingBoxMin.y)
-			boundingBoxMin.y = verticesBB[i].y;
-		if (verticesBB[i].y > boundingBoxMax.y)
-			boundingBoxMax.y = verticesBB[i].y;
-		if (verticesBB[i].z < boundingBoxMin.z)
-			boundingBoxMin.z = verticesBB[i].z;
-		if (verticesBB[i].z > boundingBoxMax.z)
-			boundingBoxMax.z = verticesBB[i].z;
-	}
+	std::cout << btl.x << std::endl;
 
-	btl += playerTrans;
-	btr += playerTrans;
-	ftl += playerTrans;
-	ftr += playerTrans;
-	fbl += playerTrans;
-	fbr += playerTrans;
-	bbl += playerTrans;
-	bbr += playerTrans;
+	btl += dir;
+	btr += dir;
+	ftl += dir;
+	ftr += dir;
+	fbl += dir;
+	fbr += dir;
+	bbl += dir;
+	bbr += dir;
 }
 
 vec3 BoundingBox::getMin() {
